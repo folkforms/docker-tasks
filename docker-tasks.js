@@ -29,8 +29,14 @@ if(option == "help") {
   return 0;
 }
 
-// FIXME Splice the param out of args when found
-const dryRun = process.argv.indexOf("-n") != -1 || process.argv.indexOf("--dry-run") != -1;
+let dryRun = false;
+for(let i = 0; i < process.argv.length; i++) {
+  if(process.argv[i] === "-n" || process.argv[i] === "--dry-run") {
+    dryRun = true;
+    process.argv.splice(i, 1);
+    break;
+  }
+}
 
 if(option == "genconfig") {
   const cmd1 = "./node_modules/docker-tasks/.docker-tasks-default-config.yml";
@@ -93,14 +99,13 @@ if(option == "release") {
     return 1;
   }
 
-  // FIXME What URL/folder if using the public repo?
-  // FIXME Probably need to use a different string if repoUrl is blank
+  const repoUrl = props.repoUrl || "docker.io";
   const cmds = [
     `docker image tag ${props.imageName}:latest ${props.imageName}:${version}`,
-    `docker image tag ${props.imageName}:latest ${props.repoUrl}/${props.repoFolder}/${props.imageName}:${version}`,
-    `docker image tag ${props.imageName}:latest ${props.repoUrl}/${props.repoFolder}/${props.imageName}:latest`,
-    `docker image push ${props.repoUrl}/${props.repoFolder}/${props.imageName}:latest`,
-    `docker image push ${props.repoUrl}/${props.repoFolder}/${props.imageName}:${version}`
+    `docker image tag ${props.imageName}:latest ${repoUrl}/${props.repoFolder}/${props.imageName}:${version}`,
+    `docker image tag ${props.imageName}:latest ${repoUrl}/${props.repoFolder}/${props.imageName}:latest`,
+    `docker image push ${repoUrl}/${props.repoFolder}/${props.imageName}:latest`,
+    `docker image push ${repoUrl}/${props.repoFolder}/${props.imageName}:${version}`
   ];
   for(let i = 0; i < cmds.length; i++) {
     exec(cmds[i]);
