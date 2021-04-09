@@ -4,42 +4,63 @@ const yaml = require("js-yaml");
 
 shelljs.echo("docker-tasks");
 
-// Arguments
+const printHelpText = () => {
+  console.log("See https://github.com/folkforms/docker-tasks for readme.");
+  console.log("");
+  console.log("`yarn docker help` - Prints this help text.");
+  console.log("`yarn docker genconfig` - Generates a configuration file for you to edit with your project details.");
+  console.log("`yarn docker build` - Builds the image.");
+  console.log("`yarn docker run` - Runs the container.");
+  console.log("`yarn docker debug` - Runs the container as above but overrides the entry point with `bash` so you can take a look inside. (Note: Because of how shelljs works the debug command cannot be run directly. Instead, this will print out a command for you to run yourself.)");
+  console.log("`yarn docker release <version>` - Tags '&lt;imageName:latest&gt;' as '&lt;imageName:version&gt;', then runs "docker push &lt;imageName:latest&gt;" followed by "docker push &lt;imageName:version&gt;".");
+  console.log("Use `-n` or `--dry-run` flag to see what commands would be run, without actually running anything.");
+}
+
+// Args
 const option = process.argv[2];
 if(!option) {
-  console.log("Error: No option chosen. Usage: ... (FIXME)");
+  console.log("Error: No option chosen.");
+  printHelpText();
   return 1;
 }
 
 if(option == "help") {
-  console.log("FIXME Print help text");
+  printHelpText();
   return 0;
 }
-
-if(option == "genconfig") {
-  // FIXME Use exec for dry-run support
-  shelljs.cp("./node_modules/docker-tasks/.docker-tasks-default-config.yml", "./.docker-tasks.yml");
-  console.log("Created file .docker-tasks.yml. You need to edit this file with your configuration options.");
-  return 0; // FIXME What does shelljs.cp return?
-}
-
-// FIXME If file is not found suggest running "genconfig" and editing the file
-// Properties
-const file = fs.readFileSync('.docker-tasks.yml', 'utf8')
-const props = yaml.load(file);
 
 // FIXME Splice the param out of args when found
 const dryRun = process.argv.indexOf("-n") != -1 || process.argv.indexOf("--dry-run") != -1;
 
-// FIXME If this fails just abort immediately, don't return
+if(option == "genconfig") {
+  const cmd = "./node_modules/docker-tasks/.docker-tasks-default-config.yml", "./.docker-tasks.yml";
+  if(!dryRun) {
+    shelljs.cp(cmd);
+    console.log("Created file .docker-tasks.yml. You need to edit this file with your configuration options.");
+  } else {
+    console.log(`cp ${cmd}`);
+  }
+  return 0;
+}
+
+// Properties
+let file, props;
+try {
+  file = fs.readFileSync('.docker-tasks.yml', 'utf8')
+  props = yaml.load(file);
+} catch(e) {
+  console.log("ERROR: Could not read file .docker-tasks.yml. Please run `yarn docker genconfig` if you have not done so already.");
+  throw e;
+}
+
 const exec = cmd => {
   if(dryRun) {
     console.log(cmd);
     return 0;
   } else {
-    const r = shelljs.exec(cmd); // FIXME What does shelljs.exec return? I think it's non-zero = good.
+    const r = shelljs.exec(cmd);
     if(!r) {
-      console.log(`Error running command: '${cmd}'.`);
+      console.log(`ERROR: Could not run command: '${cmd}'.`);
       exit(1);
     }
     return 0;
@@ -66,13 +87,12 @@ if(option == "debug") {
 if(option == "release") {
   const version = process.argv[3];
   if(!version) {
-    console.log("Error: Must include a version when using 'release' option, e.g. \"release 1.0.0\".");
+    console.log("ERROR: Must include a version when using 'release' option, e.g. \"release 1.0.0\".");
     return 1;
   }
 
-  // FIXME What URL/folder if using a local repo?
   // FIXME What URL/folder if using the public repo?
-  // FIXME Probably use a different string if repoUrl is blank
+  // FIXME Probably need to use a different string if repoUrl is blank
   const cmds = [
     `docker image tag ${props.imageName}:latest ${props.imageName}:${version}`,
     `docker image tag ${props.imageName}:latest ${props.repoUrl}/${props.repoFolder}/${props.imageName}:${version}`,
@@ -86,5 +106,6 @@ if(option == "release") {
   return 0;
 }
 
-console.log(`Error: Unknown option '${option}'. FIXME print usage.`);
+console.log(`ERROR: Unknown option '${option}'.`);
+printHelpText();
 return 1;

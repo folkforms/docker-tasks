@@ -33,7 +33,7 @@ repoFolder: <folder name on private repo>
 
 ## Options
 
-`yarn docker help` - Prints some help text.
+`yarn docker help` - Prints help text.
 
 `yarn docker genconfig` - Generates a configuration file for you to edit with your project details.
 
@@ -45,4 +45,4 @@ repoFolder: <folder name on private repo>
 
 `yarn docker release <version>` - Tags '&lt;imageName:latest&gt;' as '&lt;imageName:version&gt;', then runs "docker push &lt;imageName:latest&gt;" followed by "docker push &lt;imageName:version&gt;".
 
-Use the `-n` or `--dry-run` flag to see what commands would be run, without actually running anything.
+Use `-n` or `--dry-run` flag to see what commands would be run, without actually running anything.
