@@ -27,8 +27,8 @@ Use `yarn docker genconfig` to create a configuration file. Edit/delete the foll
 ```
 imageName: <image name> (required)
 runArgs: <args to be passed to docker run command, e.g. "-p 3000:3000">
-repoUrl: <repo url for private repo>
-repoFolder: <folder name on private repo>
+repoFolder: <folder on repo or username on docker.io>
+repoUrl: <repo url if private repo, will use docker.io if not specified>
 ```
 
 ## Options
