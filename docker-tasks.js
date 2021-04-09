@@ -74,7 +74,7 @@ if(option == "build") {
 
 if(option == "run") {
   const runArgs = props.runArgs || "";
-  return exec(`docker run ${props.runArgs} ${props.imageName}:latest`);
+  return exec(`docker run ${runArgs} ${props.imageName}:latest`);
 }
 
 if(option == "debug") {
