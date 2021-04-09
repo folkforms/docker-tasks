@@ -1,4 +1,4 @@
 imageName: <image name> (mandatory)
 runArgs: <arguments passed to docker run command>
-#repo: <repo url if private repo>
+#repoUrl: <repo url if private repo>
 #repoFolder: <folder on private repo>

@@ -2,9 +2,9 @@
 
 Common Docker workflow tasks that can be added as an npm dependency. Docker must be installed, obviously.
 
-Useful to build/run/debug/release your Docker images.
+Useful to build/run/debug/release Docker images of your NPM projects.
 
-Written because I kept adding the same commands to every project.
+Written because I kept adding the same commands every time.
 
 ## How To Use
 
