@@ -12,7 +12,7 @@ const printHelpText = () => {
   console.log("`yarn docker build` - Builds the image.");
   console.log("`yarn docker run` - Runs the container.");
   console.log("`yarn docker debug` - Runs the container as above but overrides the entry point with `bash` so you can take a look inside. (Note: Because of how shelljs works the debug command cannot be run directly. Instead, this will print out a command for you to run yourself.)");
-  console.log("`yarn docker release <version>` - Tags '&lt;imageName:latest&gt;' as '&lt;imageName:version&gt;', then runs "docker push &lt;imageName:latest&gt;" followed by "docker push &lt;imageName:version&gt;".");
+  console.log("`yarn docker release <version>` - Tags '&lt;imageName:latest&gt;' as '&lt;imageName:version&gt;', then runs \"docker push &lt;imageName:latest&gt;\" followed by \"docker push &lt;imageName:version&gt;\".");
   console.log("Use `-n` or `--dry-run` flag to see what commands would be run, without actually running anything.");
 }
 
@@ -33,12 +33,13 @@ if(option == "help") {
 const dryRun = process.argv.indexOf("-n") != -1 || process.argv.indexOf("--dry-run") != -1;
 
 if(option == "genconfig") {
-  const cmd = "./node_modules/docker-tasks/.docker-tasks-default-config.yml", "./.docker-tasks.yml";
+  const cmd1 = "./node_modules/docker-tasks/.docker-tasks-default-config.yml";
+  const cmd2 = "./.docker-tasks.yml";
   if(!dryRun) {
-    shelljs.cp(cmd);
+    shelljs.cp(cmd1, cmd2);
     console.log("Created file .docker-tasks.yml. You need to edit this file with your configuration options.");
   } else {
-    console.log(`cp ${cmd}`);
+    console.log(`cp ${cmd1} ${cmd2}`);
   }
   return 0;
 }
