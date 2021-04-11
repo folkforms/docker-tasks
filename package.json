@@ -9,6 +9,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "folkforms",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/folkforms/docker-tasks"
+  },
   "license": "ISC",
   "dependencies": {
     "fs-extra": "^9.1.0",
