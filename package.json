@@ -1,6 +1,6 @@
 {
   "name": "docker-tasks",
-  "version": "0.1.27",
+  "version": "0.1.28",
   "description": "Shelljs code that executes common Docker tasks.",
   "main": "index.js",
   "scripts": {
