@@ -2,11 +2,11 @@
 
 Common Docker workflow tasks that can be added as an npm dependency. Docker must be installed, obviously.
 
-Useful to build/run/debug/release Docker images of your NPM projects.
+Can be used to build/run/debug/release Docker images of your Node projects.
 
-Written because I kept adding the same commands every time.
+## How to use
 
-## How To Use
+### Setup
 
 Run: `yarn add docker-tasks`
 
@@ -16,22 +16,11 @@ Add the following to your package.json scripts:
 
 Run: `yarn docker genconfig`
 
-Edit the config file (see notes below)
+Edit the configuration file with your project details.
+
+### Running the tasks
 
 Run: `yarn docker <option> <args>`
-
-## Configuration
-
-Use `yarn docker genconfig` to create a configuration file. Edit/delete the following values as appropriate:
-
-```
-imageName: <image name> (required)
-runArgs: <args to be passed to docker run command, e.g. "-p 3000:3000">
-repoFolder: <folder on repo or username on docker.io>
-repoUrl: <repo url if private repo, will use docker.io if not specified>
-```
-
-## Options
 
 `yarn docker help` - Prints help text.
 
