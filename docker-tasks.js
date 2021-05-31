@@ -2,24 +2,27 @@ const shelljs = require("shelljs");
 const fs = require("fs-extra");
 const yaml = require("js-yaml");
 
-shelljs.echo("docker-tasks");
+console.log("docker-tasks");
+console.log("");
 
 const printHelpText = () => {
+  console.log("Options:");
+  console.log("yarn docker help                 Prints this help text.");
+  console.log("yarn docker genconfig            Generates a configuration file for you to edit with your project details.");
+  console.log("yarn docker build                Builds the image.");
+  console.log("yarn docker run                  Runs the container.");
+  console.log("yarn docker debug                Runs the container as above but overrides the entry point with `bash` so you can take a look inside. (Note: Because of how shelljs works the debug command cannot be run directly. Instead, this will print out a command for you to run yourself.)");
+  console.log("yarn docker release <version>    Tags '<imageName>:latest' as '<imageName>:<version>', then runs \"docker push <imageName>:latest\" followed by \"docker push <imageName>:<version>\".");
+  console.log("Use -n/--dry-run to see what commands would be run, without actually running anything.");
   console.log("See https://github.com/folkforms/docker-tasks for readme.");
-  console.log("");
-  console.log("`yarn docker help` - Prints this help text.");
-  console.log("`yarn docker genconfig` - Generates a configuration file for you to edit with your project details.");
-  console.log("`yarn docker build` - Builds the image.");
-  console.log("`yarn docker run` - Runs the container.");
-  console.log("`yarn docker debug` - Runs the container as above but overrides the entry point with `bash` so you can take a look inside. (Note: Because of how shelljs works the debug command cannot be run directly. Instead, this will print out a command for you to run yourself.)");
-  console.log("`yarn docker release <version>` - Tags '&lt;imageName:latest&gt;' as '&lt;imageName:version&gt;', then runs \"docker push &lt;imageName:latest&gt;\" followed by \"docker push &lt;imageName:version&gt;\".");
-  console.log("Use `-n` or `--dry-run` flag to see what commands would be run, without actually running anything.");
 }
 
-// Args
+// Handle args
+
 const option = process.argv[2];
 if(!option) {
-  console.log("Error: No option chosen.");
+  console.log("ERROR: No option chosen.");
+  console.log("");
   printHelpText();
   return 1;
 }
@@ -43,14 +46,15 @@ if(option == "genconfig") {
   const cmd2 = "./.docker-tasks.yml";
   if(!dryRun) {
     shelljs.cp(cmd1, cmd2);
-    console.log("Created file .docker-tasks.yml. You need to edit this file with your configuration options.");
+    console.log("Created file .docker-tasks.yml. You need to edit this file with your project details.");
   } else {
     console.log(`cp ${cmd1} ${cmd2}`);
   }
   return 0;
 }
 
-// Properties
+// Load properties
+
 let file, props;
 try {
   file = fs.readFileSync('.docker-tasks.yml', 'utf8')
@@ -74,6 +78,8 @@ const exec = cmd => {
   }
 }
 
+// Handle commands
+
 if(option == "build") {
   return exec(`docker build --tag ${props.imageName}:latest .`);
 }
@@ -84,7 +90,7 @@ if(option == "run") {
 }
 
 if(option == "debug") {
-  // FIXME Is there any way to make this work automatically?
+  // FIXME Is there any way to make this work?
   console.log("We can't debug directly because we are inside a script. You need to run this command:");
   console.log("");
   console.log(`    docker run --tty --interactive --entrypoint bash ${props.imageName}:latest`);
@@ -95,7 +101,7 @@ if(option == "debug") {
 if(option == "release") {
   const version = process.argv[3];
   if(!version) {
-    console.log("ERROR: Must include a version when using 'release' option, e.g. \"release 1.0.0\".");
+    console.log("ERROR: Must include a version when using 'release' option, e.g. \"yarn docker release 1.0.0\".");
     return 1;
   }
 
@@ -114,5 +120,6 @@ if(option == "release") {
 }
 
 console.log(`ERROR: Unknown option '${option}'.`);
+console.log("");
 printHelpText();
 return 1;
