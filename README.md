@@ -8,15 +8,13 @@ Can be used to build/run/debug/release Docker images of your Node projects.
 
 ### Setup
 
-Run: `yarn add docker-tasks`
+1. Run: `yarn add docker-tasks`
+2. Add the following to your `package.json` scripts section:
 
-Add the following to your package.json scripts:
+    `"docker": "node ./node_modules/docker-tasks/docker-tasks.js"`
 
-`"docker": "node ./node_modules/docker-tasks/docker-tasks.js"`
-
-Run: `yarn docker genconfig`
-
-Edit the configuration file with your project details.
+3. Run: `yarn docker genconfig`
+4. Edit the configuration file with your project details.
 
 ### Running the tasks
 
