@@ -3,6 +3,9 @@
   "version": "0.1.29",
   "description": "Shelljs code that executes common Docker tasks.",
   "main": "docker-tasks.js",
+  "bin": {
+    "docker-tasks": "./docker-tasks.js"
+  },
   "scripts": {
     "docker": "node docker-tasks.js",
     "release": "npm whoami && npm version patch && npm publish",

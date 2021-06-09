@@ -1,15 +1,15 @@
 # docker-tasks
 
-Allows you to more easily build/run/debug/release Docker images of your Node projects.
+Allows you to easily build/run/debug/release Docker images of your Node projects.
 
-Docker must be installed, and you will need a `Dockerfile`.
+Docker must be installed, and you will need a `Dockerfile`. This package is so you don't have to remember all the commands.
 
 ## How to use
 
 ### Setup
 
 1. Run `yarn add docker-tasks`
-2. Add `"docker": "node ./node_modules/docker-tasks/docker-tasks.js"` to your `package.json` scripts.
+2. Add `"docker": "docker-tasks"` to your `package.json` scripts.
 3. Run `yarn docker genconfig` to generate a `.docker-tasks.yml` file.
 4. Edit `.docker-tasks.yml` and add your project details.
 
