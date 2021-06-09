@@ -8,15 +8,19 @@ console.log("docker-tasks");
 console.log("");
 
 const printHelpText = () => {
-  console.log("Options:");
-  console.log("yarn docker help                 Prints this help text.");
-  console.log("yarn docker genconfig            Generates a configuration file for you to edit with your project details.");
-  console.log("yarn docker build                Builds the image.");
-  console.log("yarn docker run                  Runs the container.");
-  console.log("yarn docker debug                Runs the container as above but overrides the entry point with `bash` so you can take a look inside. (Note: Because of how shelljs works the debug command cannot be run directly. Instead, this will print out a command for you to run yourself.)");
-  console.log("yarn docker release <version>    Tags '<imageName>:latest' as '<imageName>:<version>', then runs \"docker push <imageName>:latest\" followed by \"docker push <imageName>:<version>\".");
+  console.log("Usage:");
+  console.log("");
+  console.log("  yarn docker help                 Prints this help text.");
+  console.log("  yarn docker genconfig            Generates a configuration file for you to edit with your project details.");
+  console.log("  yarn docker build                Builds the image.");
+  console.log("  yarn docker run                  Runs the container.");
+  console.log("  yarn docker debug                Runs the container as above but overrides the entry point with `bash` so you can take a look inside. (Note: Because of how shelljs works the debug command cannot be run directly. Instead, this will print out a command for you to run yourself.)");
+  console.log("  yarn docker release <version>    Tags '<imageName>:latest' as '<imageName>:<version>', then runs \"docker push <imageName>:latest\" followed by \"docker push <imageName>:<version>\".");
+  console.log("");
   console.log("Use -n/--dry-run to see what commands would be run, without actually running anything.");
+  console.log("");
   console.log("See https://github.com/folkforms/docker-tasks for readme.");
+  console.log("");
 }
 
 // Handle args
