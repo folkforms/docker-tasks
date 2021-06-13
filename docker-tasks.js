@@ -84,22 +84,29 @@ const exec = cmd => {
   }
 }
 
+// Grab additional args
+let additionalArgs = [];
+for(let i = 3; i < process.argv.length; i++) {
+  additionalArgs.push(process.argv[i]);
+}
+additionalArgs = additionalArgs.join(" ");
+
 // Handle commands
 
 if(option == "build") {
-  return exec(`docker build --tag ${props.imageName}:latest .`);
+  return exec(`docker build ${additionalArgs} --tag ${props.imageName}:latest .`);
 }
 
 if(option == "run") {
   const runArgs = props.runArgs || "";
-  return exec(`docker run ${runArgs} ${props.imageName}:latest`);
+  return exec(`docker run ${additionalArgs} ${runArgs} ${props.imageName}:latest`);
 }
 
 if(option == "debug") {
   // FIXME Is there any way to make this work?
   console.log("We can't debug directly because we are inside a script. You need to run this command:");
   console.log("");
-  console.log(`    docker run --tty --interactive --entrypoint bash ${props.imageName}:latest`);
+  console.log(`    docker run ${additionalArgs} --tty --interactive --entrypoint bash ${props.imageName}:latest`);
   console.log("");
   return 0;
 }
@@ -113,11 +120,11 @@ if(option == "release") {
 
   const repoUrl = props.repoUrl || "docker.io";
   const cmds = [
-    `docker image tag ${props.imageName}:latest ${props.imageName}:${version}`,
-    `docker image tag ${props.imageName}:latest ${repoUrl}/${props.repoFolder}/${props.imageName}:${version}`,
-    `docker image tag ${props.imageName}:latest ${repoUrl}/${props.repoFolder}/${props.imageName}:latest`,
-    `docker image push ${repoUrl}/${props.repoFolder}/${props.imageName}:latest`,
-    `docker image push ${repoUrl}/${props.repoFolder}/${props.imageName}:${version}`
+    `docker image tag ${additionalArgs} ${props.imageName}:latest ${props.imageName}:${version}`,
+    `docker image tag ${additionalArgs} ${props.imageName}:latest ${repoUrl}/${props.repoFolder}/${props.imageName}:${version}`,
+    `docker image tag ${additionalArgs} ${props.imageName}:latest ${repoUrl}/${props.repoFolder}/${props.imageName}:latest`,
+    `docker image push ${additionalArgs} ${repoUrl}/${props.repoFolder}/${props.imageName}:latest`,
+    `docker image push ${additionalArgs} ${repoUrl}/${props.repoFolder}/${props.imageName}:${version}`
   ];
   for(let i = 0; i < cmds.length; i++) {
     exec(cmds[i]);
