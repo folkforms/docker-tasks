@@ -19,6 +19,7 @@ Run `yarn docker <option>`
 
 - `yarn docker genconfig` generates a configuration file where you can add your project details.
 - `yarn docker build` builds the image.
+- `yarn docker start` starts the container.
 - `yarn docker run` runs the container.
 - `yarn docker debug` runs the container but overrides the entry point with `bash` so you can take a look inside. (Note: Because of how shelljs works the debug command cannot be run directly. Instead, this will print out a command for you to run yourself.)
 - `yarn docker release <version>` tags '&lt;imageName&gt;:latest' as '&lt;imageName&gt;:&lt;version&gt;', then runs "docker push &lt;imageName&gt;:latest" followed by "docker push &lt;imageName&gt;:&lt;version&gt;".
