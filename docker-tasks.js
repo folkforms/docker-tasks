@@ -100,12 +100,12 @@ if(option == "build") {
 
 if(option == "run") {
   const runArgs = props.runArgs || "";
-  return exec(`docker run ${additionalArgs} ${runArgs} ${props.imageName}:latest`);
+  return exec(`docker run ${additionalArgs} ${runArgs} --name ${props.imageName} ${props.imageName}:latest`);
 }
 
 if(option == "start") {
   const runArgs = props.runArgs || "";
-  return exec(`docker start ${additionalArgs} ${runArgs} ${props.imageName}:latest`);
+  return exec(`docker start ${additionalArgs} ${runArgs} --name ${props.imageName} ${props.imageName}:latest`);
 }
 
 if(option == "debug") {
