@@ -16,6 +16,7 @@ const printHelpText = () => {
   console.log("  yarn docker start                Starts the container.");
   console.log("  yarn docker run                  Runs the container.");
   console.log("  yarn docker debug                Runs the container as above but overrides the entry point with `bash` so you can take a look inside. (Note: Because of how shelljs works the debug command cannot be run directly. Instead, this will print out a command for you to run yourself.)");
+  console.log("  yarn docker clear                Stops and removes the container.");
   console.log("  yarn docker release <version>    Tags '<imageName>:latest' as '<imageName>:<version>', then runs \"docker push <imageName>:latest\" followed by \"docker push <imageName>:<version>\".");
   console.log("");
   console.log("Use -n/--dry-run to see what commands would be run, without actually running anything.");
@@ -106,6 +107,14 @@ if(option == "run") {
 if(option == "start") {
   const runArgs = props.runArgs || "";
   return exec(`docker start ${additionalArgs} ${runArgs} --name ${props.imageName} ${props.imageName}:latest`);
+}
+
+if(option == "clear") {
+  let errorCode = exec(`docker stop ${props.imageName}`);
+  if (errorCode != 0) {
+    return errorCode;
+  }
+  return exec(`docker rm ${props.imageName}`);
 }
 
 if(option == "debug") {
