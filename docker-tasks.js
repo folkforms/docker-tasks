@@ -13,7 +13,6 @@ const printHelpText = () => {
   console.log("  yarn docker help                 Prints this help text.");
   console.log("  yarn docker genconfig            Generates a configuration file for you to edit with your project details.");
   console.log("  yarn docker build                Builds the image.");
-  console.log("  yarn docker start                Starts the container.");
   console.log("  yarn docker run                  Runs the container.");
   console.log("  yarn docker debug                Runs the container as above but overrides the entry point with `bash` so you can take a look inside. (Note: Because of how shelljs works the debug command cannot be run directly. Instead, this will print out a command for you to run yourself.)");
   console.log("  yarn docker clear                Stops and removes the container.");
@@ -102,11 +101,6 @@ if(option == "build") {
 if(option == "run") {
   const runArgs = props.runArgs || "";
   return exec(`docker run ${additionalArgs} ${runArgs} --name ${props.imageName} ${props.imageName}:latest`);
-}
-
-if(option == "start") {
-  const runArgs = props.runArgs || "";
-  return exec(`docker start ${additionalArgs} ${runArgs} --name ${props.imageName} ${props.imageName}:latest`);
 }
 
 if(option == "clear") {
