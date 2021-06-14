@@ -52,7 +52,11 @@ if(option == "genconfig") {
   const cmd1 = "./node_modules/docker-tasks/.docker-tasks-default-config.yml";
   const cmd2 = "./.docker-tasks.yml";
   if(!dryRun) {
-    shelljs.cp(cmd1, cmd2);
+    const r = shelljs.cp(cmd1, cmd2);
+    if(r.code) {
+      console.log(`ERROR: Could not copy file '${cmd1}' to '${cmd2}'.`);
+      shelljs.exit(1);
+    }
     console.log("Created file .docker-tasks.yml. You need to edit this file with your project details.");
   } else {
     console.log(`cp ${cmd1} ${cmd2}`);
@@ -71,15 +75,20 @@ try {
   throw e;
 }
 
+/**
+ * Executes the given command. If there is an error it will call `shelljs.exit(1)`.
+ *
+ * @param {string} cmd command to execute
+ */
 const exec = cmd => {
   if(dryRun) {
     console.log(cmd);
     return 0;
   } else {
     const r = shelljs.exec(cmd);
-    if(!r) {
+    if(r.code) {
       console.log(`ERROR: Could not run command: '${cmd}'.`);
-      exit(1);
+      shelljs.exit(1);
     }
     return 0;
   }
@@ -104,10 +113,7 @@ if(option == "run") {
 }
 
 if(option == "clear") {
-  let errorCode = exec(`docker stop ${props.imageName}`);
-  if (errorCode != 0) {
-    return errorCode;
-  }
+  exec(`docker stop ${props.imageName}`);
   return exec(`docker rm ${props.imageName}`);
 }
 
