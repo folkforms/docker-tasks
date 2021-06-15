@@ -10,13 +10,13 @@ const dockerTasks = (execFunction = shelljs, args) => {
   const printHelpText = () => {
     execFunction.echo("Usage:");
     execFunction.echo("");
-    execFunction.echo("  yarn docker help                 Prints this help text.");
-    execFunction.echo("  yarn docker genconfig            Generates a configuration file for you to edit with your project details.");
-    execFunction.echo("  yarn docker build                Builds the image.");
-    execFunction.echo("  yarn docker run                  Runs the container.");
-    execFunction.echo("  yarn docker debug                Runs the container as above but overrides the entry point with `bash` so you can take a look inside. (Note: Because of how shelljs works the debug command cannot be run directly. Instead, this will print out a command for you to run yourself.)");
-    execFunction.echo("  yarn docker clear                Stops and removes the container.");
-    execFunction.echo("  yarn docker release <version>    Tags '<imageName>:latest' as '<imageName>:<version>', then runs \"docker push <imageName>:latest\" followed by \"docker push <imageName>:<version>\".");
+    execFunction.echo("  yarn docker-tasks help                 Prints this help text.");
+    execFunction.echo("  yarn docker-tasks genconfig            Generates a configuration file for you to edit with your project details.");
+    execFunction.echo("  yarn docker-tasks build                Builds the image.");
+    execFunction.echo("  yarn docker-tasks run                  Runs the container.");
+    execFunction.echo("  yarn docker-tasks debug                Runs the container as above but overrides the entry point with `bash` so you can take a look inside. (Note: Because of how shelljs works the debug command cannot be run directly. Instead, this will print out a command for you to run yourself.)");
+    execFunction.echo("  yarn docker-tasks clear                Stops and removes the container.");
+    execFunction.echo("  yarn docker-tasks release <version>    Tags '<imageName>:latest' as '<imageName>:<version>', then runs \"docker push <imageName>:latest\" followed by \"docker push <imageName>:<version>\".");
     execFunction.echo("");
     execFunction.echo("Use -n/--dry-run to see what commands would be run, without actually running anything.");
     execFunction.echo("");
