@@ -34,7 +34,7 @@ const dockerTasks = (execFunction = shelljs, args) => {
     return 1;
   }
 
-  if(option == "help") {
+  if(option === "help") {
     printHelpText();
     return 0;
   }
@@ -48,7 +48,7 @@ const dockerTasks = (execFunction = shelljs, args) => {
     }
   }
 
-  if(option == "genconfig") {
+  if(option === "genconfig") {
     const cmd1 = "./node_modules/docker-tasks/.docker-tasks-default-config.yml";
     const cmd2 = "./.docker-tasks.yml";
     if(!dryRun) {
@@ -108,17 +108,17 @@ const dockerTasks = (execFunction = shelljs, args) => {
 
   // Handle commands
 
-  if(option == "build") {
+  if(option === "build") {
     exec(`docker build ${additionalArgs} --tag ${props.imageName}:latest .`);
     return 0;
   }
 
-  if(option == "run") {
+  if(option === "run") {
     const runArgs = props.runArgs || "";
     return exec(`docker run ${additionalArgs} ${runArgs} --name ${props.imageName} ${props.imageName}:latest`);
   }
 
-  if(option == "clear") {
+  if(option === "clear") {
     const r1 = exec(`docker stop ${props.imageName}`);
     if(r1) {
       return r1;
@@ -127,7 +127,7 @@ const dockerTasks = (execFunction = shelljs, args) => {
     return r2;
   }
 
-  if(option == "debug") {
+  if(option === "debug") {
     // FIXME Is there any way to make this work?
     execFunction.echo("We can't debug directly because we are inside a script. You need to run this command:");
     execFunction.echo("");
@@ -136,7 +136,7 @@ const dockerTasks = (execFunction = shelljs, args) => {
     return 0;
   }
 
-  if(option == "release") {
+  if(option === "release") {
     const version = args[1];
     if(!version) {
       execFunction.echo("ERROR: Must include a version when using 'release' option, e.g. \"yarn docker release 1.0.0\".");
