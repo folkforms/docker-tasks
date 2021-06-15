@@ -144,13 +144,22 @@ const dockerTasks = (execFunction = shelljs, args) => {
     }
 
     const repoUrl = props.repoUrl || "docker.io";
-    const cmds = [
-      `docker image tag ${additionalArgs} ${props.imageName}:latest ${props.imageName}:${version}`,
-      `docker image tag ${additionalArgs} ${props.imageName}:latest ${repoUrl}/${props.repoFolder}/${props.imageName}:${version}`,
-      `docker image tag ${additionalArgs} ${props.imageName}:latest ${repoUrl}/${props.repoFolder}/${props.imageName}:latest`,
-      `docker image push ${additionalArgs} ${repoUrl}/${props.repoFolder}/${props.imageName}:latest`,
-      `docker image push ${additionalArgs} ${repoUrl}/${props.repoFolder}/${props.imageName}:${version}`
-    ];
+
+    let cmds;
+    if(version === "latest") {
+      cmds = [
+        `docker image tag ${additionalArgs} ${props.imageName}:latest ${repoUrl}/${props.repoFolder}/${props.imageName}:latest`,
+        `docker image push ${additionalArgs} ${repoUrl}/${props.repoFolder}/${props.imageName}:latest`,
+      ];
+    } else {
+      cmds = [
+        `docker image tag ${additionalArgs} ${props.imageName}:latest ${props.imageName}:${version}`,
+        `docker image tag ${additionalArgs} ${props.imageName}:latest ${repoUrl}/${props.repoFolder}/${props.imageName}:${version}`,
+        `docker image tag ${additionalArgs} ${props.imageName}:latest ${repoUrl}/${props.repoFolder}/${props.imageName}:latest`,
+        `docker image push ${additionalArgs} ${repoUrl}/${props.repoFolder}/${props.imageName}:latest`,
+        `docker image push ${additionalArgs} ${repoUrl}/${props.repoFolder}/${props.imageName}:${version}`
+      ];
+    }
     for(let i = 0; i < cmds.length; i++) {
       exec(cmds[i]);
     }

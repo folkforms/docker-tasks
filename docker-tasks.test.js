@@ -29,14 +29,14 @@ test("when we call 'debug' it executes the correct command", () => {
   expect(dummyShellJs.commands).toContain("echo('    docker run  --tty --interactive --entrypoint bash foo:latest')");
 });
 
-test("when we call 'clear' it executes the correct command", () => {
+test("when we call 'clear' it executes the correct commands", () => {
   const exitCode = dockerTasks(dummyShellJs, ["clear"]);
   expect(exitCode).toEqual(0);
   expect(dummyShellJs.commands).toContain("exec('docker stop foo')");
   expect(dummyShellJs.commands).toContain("exec('docker rm foo')");
 });
 
-test("when we call 'release' it executes the correct command", () => {
+test("when we call 'release 1.0.0' it executes the correct commands", () => {
   const exitCode = dockerTasks(dummyShellJs, ["release", "1.0.0"]);
   expect(exitCode).toEqual(0);
   expect(dummyShellJs.commands).toContain("exec('docker image tag foo:latest foo:1.0.0')");
@@ -44,6 +44,13 @@ test("when we call 'release' it executes the correct command", () => {
   expect(dummyShellJs.commands).toContain("exec('docker image tag foo:latest docker.io/folkforms/foo:latest')");
   expect(dummyShellJs.commands).toContain("exec('docker image push docker.io/folkforms/foo:latest')");
   expect(dummyShellJs.commands).toContain("exec('docker image push docker.io/folkforms/foo:1.0.0')");
+});
+
+test("when we call 'release latest' it executes the correct commands", () => {
+  const exitCode = dockerTasks(dummyShellJs, ["release", "1.0.0"]);
+  expect(exitCode).toEqual(0);
+  expect(dummyShellJs.commands).toContain("exec('docker image tag foo:latest docker.io/folkforms/foo:latest')");
+  expect(dummyShellJs.commands).toContain("exec('docker image push docker.io/folkforms/foo:latest')");
 });
 
 test("when we pass an unknown command we get an error message and a non-zero exit code", () => {
