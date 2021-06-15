@@ -1,16 +1,14 @@
 {
   "name": "docker-tasks",
   "version": "0.1.37",
-  "description": "Shelljs code that executes common Docker tasks.",
+  "description": "Add common Docker workflow tasks (build/run/debug/release) to a Node project.",
   "main": "docker-tasks.js",
   "bin": {
     "docker-tasks": "./cli.js"
   },
   "scripts": {
     "docker": "node cli.js",
-    "prune": "yarn install --production --force",
-    "unprune": "yarn install",
-    "release": "npm whoami && yarn run prune && npm version patch && npm publish && yarn run unprune",
+    "release": "npm whoami && yarn install --production --force && npm version patch && npm publish && yarn install",
     "test": "jest"
   },
   "author": "folkforms",
