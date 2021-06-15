@@ -4,12 +4,12 @@
   "description": "Shelljs code that executes common Docker tasks.",
   "main": "docker-tasks.js",
   "bin": {
-    "docker-tasks": "./docker-tasks.js"
+    "docker-tasks": "./cli.js"
   },
   "scripts": {
-    "docker": "node docker-tasks.js",
+    "docker": "node cli.js",
     "release": "npm whoami && npm version patch && npm publish",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "folkforms",
   "repository": {
@@ -19,6 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "fs-extra": "^9.1.0",
+    "jest": "^27.0.4",
     "js-yaml": "^4.0.0",
     "shelljs": "^0.8.4"
   }
