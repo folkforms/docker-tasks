@@ -22,7 +22,7 @@ test("when we call 'build -p' it executes the correct commands", () => {
   const exitCode = dockerTasks(dummyShellJs, ["build", "-p"]);
   expect(exitCode).toEqual(0);
   expect(dummyShellJs.execList.length).toEqual(2);
-  expect(dummyShellJs.execList).toContain("docker system prune -f");
+  expect(dummyShellJs.execList).toContain("docker system prune --force");
   expect(dummyShellJs.execList).toContain("docker build --tag foo:latest .");
 });
 
@@ -30,7 +30,7 @@ test("when we call 'prune' it executes the correct commands", () => {
   const exitCode = dockerTasks(dummyShellJs, ["prune"]);
   expect(exitCode).toEqual(0);
   expect(dummyShellJs.execList.length).toEqual(1);
-  expect(dummyShellJs.execList).toContain("docker system prune -f");
+  expect(dummyShellJs.execList).toContain("docker system prune --force");
 });
 
 test("when we call 'run' it executes the correct command", () => {
