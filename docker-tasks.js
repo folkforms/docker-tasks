@@ -133,6 +133,8 @@ const dockerTasks = (execFunction = shelljs, args) => {
   }
 
   if(option === "run") {
+    exec(`docker stop ${props.imageName}`);
+    exec(`docker rm ${props.imageName}`);
     const runArgs = props.runArgs || "";
     return exec(`docker run ${additionalArgs} ${runArgs} --name ${props.imageName} ${props.imageName}:latest`);
   }
