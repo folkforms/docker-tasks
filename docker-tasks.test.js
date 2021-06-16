@@ -14,7 +14,23 @@ test("when we call 'genconfig' it executes the correct command", () => {
 test("when we call 'build' it executes the correct command", () => {
   const exitCode = dockerTasks(dummyShellJs, ["build"]);
   expect(exitCode).toEqual(0);
+  expect(dummyShellJs.execList.length).toEqual(1);
   expect(dummyShellJs.execList).toContain("docker build --tag foo:latest .");
+});
+
+test("when we call 'build -p' it executes the correct commands", () => {
+  const exitCode = dockerTasks(dummyShellJs, ["build", "-p"]);
+  expect(exitCode).toEqual(0);
+  expect(dummyShellJs.execList.length).toEqual(2);
+  expect(dummyShellJs.execList).toContain("docker system prune -f");
+  expect(dummyShellJs.execList).toContain("docker build --tag foo:latest .");
+});
+
+test("when we call 'prune' it executes the correct commands", () => {
+  const exitCode = dockerTasks(dummyShellJs, ["prune"]);
+  expect(exitCode).toEqual(0);
+  expect(dummyShellJs.execList.length).toEqual(1);
+  expect(dummyShellJs.execList).toContain("docker system prune -f");
 });
 
 test("when we call 'run' it executes the correct command", () => {
@@ -26,7 +42,7 @@ test("when we call 'run' it executes the correct command", () => {
 test("when we call 'debug' it executes the correct command", () => {
   const exitCode = dockerTasks(dummyShellJs, ["debug"]);
   expect(exitCode).toEqual(0);
-  expect(dummyShellJs.echoList).toContain("    docker run  --tty --interactive --entrypoint bash foo:latest");
+  expect(dummyShellJs.echoList).toContain("docker run  --tty --interactive --entrypoint bash foo:latest");
 });
 
 test("when we call 'clear' it executes the correct commands", () => {

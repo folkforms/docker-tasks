@@ -7,7 +7,7 @@ const dummyShellJs = {
   exit: () => {},
   echoList: [],
   echo: arg => {
-    dummyShellJs.echoList.push(arg);
+    dummyShellJs.echoList.push(arg.trim());
   },
   cpList: [],
   cp: (arg1, arg2) => {
@@ -16,7 +16,7 @@ const dummyShellJs = {
   },
   execList: [],
   exec: arg => {
-    dummyShellJs.execList.push(arg);
+    dummyShellJs.execList.push(arg.trim());
     return { code: 0 };
   },
 }

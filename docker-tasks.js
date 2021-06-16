@@ -4,18 +4,18 @@ const yaml = require("js-yaml");
 
 const dockerTasks = (execFunction = shelljs, args) => {
 
-  execFunction.echo("docker-tasks");
-  execFunction.echo("");
-
   const printHelpText = () => {
+    execFunction.echo("docker-tasks");
+    execFunction.echo("");
     execFunction.echo("Usage:");
     execFunction.echo("");
     execFunction.echo("  yarn docker-tasks help                 Prints this help text.");
     execFunction.echo("  yarn docker-tasks genconfig            Generates a configuration file for you to edit with your project details.");
-    execFunction.echo("  yarn docker-tasks build                Builds the image.");
+    execFunction.echo("  yarn docker-tasks build [-p]           Builds the image. Use -p to prune before building.");
     execFunction.echo("  yarn docker-tasks run                  Runs the container.");
     execFunction.echo("  yarn docker-tasks debug                Runs the container as above but overrides the entry point with `bash` so you can take a look inside. (Note: Because of how shelljs works the debug command cannot be run directly. Instead, this will print out a command for you to run yourself.)");
     execFunction.echo("  yarn docker-tasks clear                Stops and removes the container.");
+    execFunction.echo("  yarn docker-tasks prune                Removes unused data.");
     execFunction.echo("  yarn docker-tasks release <version>    Tags '<imageName>:latest' as '<imageName>:<version>', then runs \"docker push <imageName>:latest\" followed by \"docker push <imageName>:<version>\".");
     execFunction.echo("");
     execFunction.echo("Use -n/--dry-run to see what commands would be run, without actually running anything.");
@@ -26,12 +26,17 @@ const dockerTasks = (execFunction = shelljs, args) => {
 
   // Handle args
 
-  const option = args[0];
+  const option = args.splice(0, 1)[0];
   if(!option) {
     execFunction.echo("ERROR: No option chosen.");
     execFunction.echo("");
     printHelpText();
     return 1;
+  }
+
+  let version;
+  if(option === "release") {
+    version = args.splice(0, 1)[0];
   }
 
   if(option === "help") {
@@ -40,13 +45,28 @@ const dockerTasks = (execFunction = shelljs, args) => {
   }
 
   let dryRun = false;
+  let prune = false;
   for(let i = 0; i < args.length; i++) {
     if(args[i] === "-n" || args[i] === "--dry-run") {
       dryRun = true;
       args.splice(i, 1);
-      break;
+      i--;
+      continue;
+    }
+    if(args[i] === "-p" || args[i] === "--prune") {
+      prune = true;
+      args.splice(i, 1);
+      i--;
+      continue;
     }
   }
+
+  // Grab additional args
+  let additionalArgs = [];
+  for(let i = 0; i < args.length; i++) {
+    additionalArgs.push(args[i]);
+  }
+  additionalArgs = additionalArgs.join(" ");
 
   if(option === "genconfig") {
     const cmd1 = "./node_modules/docker-tasks/.docker-tasks-default-config.yml";
@@ -95,22 +115,21 @@ const dockerTasks = (execFunction = shelljs, args) => {
     }
   }
 
-  // Grab additional args
-  let additionalArgs = [];
-  let startIndex = 1;
-  if(option === "release") {
-    startIndex = 2;
-  }
-  for(let i = startIndex; i < args.length; i++) {
-    additionalArgs.push(args[i]);
-  }
-  additionalArgs = additionalArgs.join(" ");
-
   // Handle commands
 
   if(option === "build") {
-    exec(`docker build ${additionalArgs} --tag ${props.imageName}:latest .`);
-    return 0;
+    let r1;
+    if(prune) {
+      r1 = exec(`docker system prune --force`);
+    }
+    if(r1) {
+      return r1;
+    }
+    return exec(`docker build ${additionalArgs} --tag ${props.imageName}:latest .`);
+  }
+
+  if(option === "prune") {
+    return exec(`docker system prune --force ${additionalArgs}`);
   }
 
   if(option === "run") {
@@ -123,8 +142,7 @@ const dockerTasks = (execFunction = shelljs, args) => {
     if(r1) {
       return r1;
     }
-    const r2 = exec(`docker rm ${props.imageName}`);
-    return r2;
+    return exec(`docker rm ${props.imageName}`);
   }
 
   if(option === "debug") {
@@ -137,7 +155,6 @@ const dockerTasks = (execFunction = shelljs, args) => {
   }
 
   if(option === "release") {
-    const version = args[1];
     if(!version) {
       execFunction.echo("ERROR: Must include a version when using 'release' option, e.g. \"yarn docker release 1.0.0\".");
       return 1;
