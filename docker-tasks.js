@@ -133,9 +133,12 @@ const dockerTasks = (execFunction = shelljs, args) => {
 
   if(option === "debug") {
     // FIXME Is there any way to make this work?
-    execFunction.echo("We can't debug directly because we are inside a script. You need to run this command:");
+    execFunction.echo("We can't debug directly because we are inside a script. You need to run one of these commands:");
     execFunction.echo("");
+    execFunction.echo(`    docker exec --tty --interactive ${props.imageName} bash`);
     execFunction.echo(`    docker run ${additionalArgs} --tty --interactive --entrypoint bash ${props.imageName}:latest`);
+    execFunction.echo("");
+    execFunction.echo("The first command will run bash in a running container, the second will start a new container.");
     execFunction.echo("");
     return 0;
   }

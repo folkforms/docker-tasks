@@ -42,6 +42,7 @@ test("when we call 'run' it executes the correct command", () => {
 test("when we call 'debug' it executes the correct command", () => {
   const exitCode = dockerTasks(dummyShellJs, ["debug"]);
   expect(exitCode).toEqual(0);
+  expect(dummyShellJs.echoList).toContain("docker exec --tty --interactive foo bash");
   expect(dummyShellJs.echoList).toContain("docker run  --tty --interactive --entrypoint bash foo:latest");
 });
 
