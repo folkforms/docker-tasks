@@ -44,15 +44,8 @@ const dockerTasks = (execFunction = shelljs, args) => {
     return 0;
   }
 
-  let dryRun = false;
   let prune = false;
   for(let i = 0; i < args.length; i++) {
-    if(args[i] === "-n" || args[i] === "--dry-run") {
-      dryRun = true;
-      args.splice(i, 1);
-      i--;
-      continue;
-    }
     if(args[i] === "-p" || args[i] === "--prune") {
       prune = true;
       args.splice(i, 1);
@@ -71,16 +64,12 @@ const dockerTasks = (execFunction = shelljs, args) => {
   if(option === "genconfig") {
     const cmd1 = "./node_modules/docker-tasks/.docker-tasks-default-config.yml";
     const cmd2 = "./.docker-tasks.yml";
-    if(!dryRun) {
-      const r = execFunction.cp(cmd1, cmd2);
-      if(r.code) {
-        execFunction.echo(`ERROR: Could not copy file '${cmd1}' to '${cmd2}'.`);
-        return 1;
-      }
-      execFunction.echo("Created file .docker-tasks.yml. You need to edit this file with your project details.");
-    } else {
-      execFunction.echo(`cp ${cmd1} ${cmd2}`);
+    const r = execFunction.cp(cmd1, cmd2);
+    if(r.code) {
+      execFunction.echo(`ERROR: Could not copy file '${cmd1}' to '${cmd2}'.`);
+      return 1;
     }
+    execFunction.echo("Created file .docker-tasks.yml. You need to edit this file with your project details.");
     return 0;
   }
 
@@ -102,17 +91,12 @@ const dockerTasks = (execFunction = shelljs, args) => {
    */
   const exec = cmd => {
     cmd = cmd.replace(/\s+/g, " ");
-    if(dryRun) {
-      execFunction.echo(cmd);
-      return 0;
-    } else {
-      const r = execFunction.exec(cmd);
-      if(r.code) {
-        execFunction.echo(`ERROR: Could not run command: '${cmd}'.`);
-        return 1;
-      }
-      return 0;
+    const r = execFunction.exec(cmd);
+    if(r.code) {
+      execFunction.echo(`ERROR: Could not run command: '${cmd}'.`);
+      return 1;
     }
+    return 0;
   }
 
   // Handle commands

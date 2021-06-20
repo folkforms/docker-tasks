@@ -21,4 +21,4 @@ const dummyShellJs = {
   },
 }
 
-module.exports = dummyShellJs
+module.exports = dummyShellJs;
