@@ -6,6 +6,12 @@ Docker must be installed, and you will need a `Dockerfile`. This package is so y
 
 ## How to use
 
+### Setup
+
+1. Run `yarn add docker-tasks`
+2. Run `yarn docker-tasks genconfig` to generate a `.docker-tasks.yml` file.
+3. Edit `.docker-tasks.yml` and add your project details.
+
 ### Running the tasks
 
 Run `yarn docker-tasks <option>`
@@ -18,12 +24,6 @@ Run `yarn docker-tasks <option>`
 - `yarn docker-tasks release <version>` tags `latest` with `<version>` and pushes both to the remote repo/docker.io.
 - `yarn docker-tasks help` prints this help text.
 - Use `-n` or `--dry-run` flag to see what commands would be run, without actually running anything.
-
-### Setup
-
-1. Run `yarn add docker-tasks`
-2. Run `yarn docker-tasks genconfig` to generate a `.docker-tasks.yml` file.
-3. Edit `.docker-tasks.yml` and add your project details.
 
 ### Examples
 
