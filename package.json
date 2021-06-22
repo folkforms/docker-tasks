@@ -7,7 +7,7 @@
     "docker-tasks": "./cli.js"
   },
   "scripts": {
-    "docker": "node cli.js",
+    "docker-tasks": "node cli.js",
     "release": "yarn test && npm whoami && yarn install --production --force && npm version patch && npm publish && yarn install",
     "test": "jest"
   },
