@@ -17,10 +17,11 @@ Docker must be installed, and you will need a `Dockerfile`. This package is so y
 Run `yarn docker-tasks <option>`
 
 - `yarn docker-tasks genconfig` generates a configuration file where you can add your project details.
-- `yarn docker-tasks build` builds the image.
+- `yarn docker-tasks build [-p/--prune]` builds the image. Use `-p/--prune` to prune before building.
 - `yarn docker-tasks run` runs the container.
 - `yarn docker-tasks debug` runs the container but overrides the entry point with `bash` so you can take a look inside. (Note: Because of how shelljs works the debug command cannot be run directly. Instead, this will print out a command for you to run yourself.)
 - `yarn docker-tasks clear` stops and removes the container.
+- `yarn docker-tasks prune` removes unused data.
 - `yarn docker-tasks release <version>` tags `latest` with `<version>` and pushes both to the remote repo/docker.io.
 - `yarn docker-tasks help` prints this help text.
 - Use `-n` or `--dry-run` flag to see what commands would be run, without actually running anything.
@@ -46,4 +47,6 @@ username: folkforms
 - Running `yarn docker-tasks clear`
     - => `docker stop foo`
     - => `docker rm foo`
+- Running `yarn docker-tasks prune`
+    - => `docker system prune --force`
 - etc.
