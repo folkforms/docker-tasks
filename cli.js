@@ -17,4 +17,8 @@ for(let i = 0; i < process.argv.length; i++) {
 }
 const shell = dryRun ? dryRunShellJs : undefined;
 
+if(dryRun) { console.log(""); }
+
 dockerTasks(shell, process.argv);
+
+if(dryRun) { console.log(""); }
