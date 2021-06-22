@@ -6,12 +6,6 @@ Docker must be installed, and you will need a `Dockerfile`. This package is so y
 
 ## How to use
 
-### Setup
-
-1. Run `yarn add docker-tasks`
-2. Run `yarn docker-tasks genconfig` to generate a `.docker-tasks.yml` file.
-3. Edit `.docker-tasks.yml` and add your project details.
-
 ### Running the tasks
 
 Run `yarn docker-tasks <option>`
@@ -24,3 +18,32 @@ Run `yarn docker-tasks <option>`
 - `yarn docker-tasks release <version>` tags `latest` with `<version>` and pushes both to the remote repo/docker.io.
 - `yarn docker-tasks help` prints this help text.
 - Use `-n` or `--dry-run` flag to see what commands would be run, without actually running anything.
+
+### Setup
+
+1. Run `yarn add docker-tasks`
+2. Run `yarn docker-tasks genconfig` to generate a `.docker-tasks.yml` file.
+3. Edit `.docker-tasks.yml` and add your project details.
+
+### Examples
+
+With this configuration:
+```
+imageName: foo
+runArgs: -p 3000:3000
+username: folkforms
+```
+
+- Running `yarn docker-tasks build`
+    - => `docker build --tag foo:latest .`
+- Running `yarn docker-tasks run`
+    - => `docker stop foo`
+    - => `docker rm foo`
+    - => `docker run -p 3000:3000 --name foo foo:latest`
+- Running `yarn docker-tasks release latest`
+    - => `docker image tag foo:latest docker.io/folkforms/foo:latest`
+    - => `docker image push docker.io/folkforms/foo:latest`
+- Running `yarn docker-tasks clear`
+    - => `docker stop foo`
+    - => `docker rm foo`
+- etc.
