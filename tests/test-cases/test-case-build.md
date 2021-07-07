@@ -6,7 +6,7 @@ Test when we call 'build' it executes the correct command.
 
 ## Input config
 
-    imageName: foo
+    imageName: bar
     runArgs: -p 3000:3000
     repoFolder: folkforms
     repoUrl: example.com
@@ -17,4 +17,4 @@ Test when we call 'build' it executes the correct command.
 
 ## Expected commands
 
-    docker build --tag foo:latest .
+    docker build --tag bar:latest .

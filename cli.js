@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
-const dockerTasks = require("./docker-tasks");
+const fs = require("fs-extra");
+const yaml = require("js-yaml");
 const dryRunShellJs = require("./dryRunShellJs");
+const dockerTasks = require("./docker-tasks");
 
 process.argv.splice(0,2); // Remove node and script name
 
@@ -19,6 +21,15 @@ const shell = dryRun ? dryRunShellJs : undefined;
 
 if(dryRun) { console.log(""); }
 
-dockerTasks(shell, process.argv);
+let file, props;
+try {
+  file = fs.readFileSync('.docker-tasks.yml', 'utf8')
+  props = yaml.load(file);
+} catch(e) {
+  execFunction.echo("ERROR: Could not read file .docker-tasks.yml. Please run `yarn docker genconfig` if you have not done so already.");
+  throw e;
+}
+
+dockerTasks(shell, props, process.argv);
 
 if(dryRun) { console.log(""); }

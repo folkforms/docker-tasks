@@ -1,8 +1,6 @@
 const shelljs = require("shelljs");
-const fs = require("fs-extra");
-const yaml = require("js-yaml");
 
-const dockerTasks = (execFunction = shelljs, args) => {
+const dockerTasks = (execFunction = shelljs, props, args) => {
 
   const printHelpText = () => {
     execFunction.echo("docker-tasks");
@@ -71,17 +69,6 @@ const dockerTasks = (execFunction = shelljs, args) => {
     }
     execFunction.echo("Created file .docker-tasks.yml. You need to edit this file with your project details.");
     return 0;
-  }
-
-  // Load properties
-
-  let file, props;
-  try {
-    file = fs.readFileSync('.docker-tasks.yml', 'utf8')
-    props = yaml.load(file);
-  } catch(e) {
-    execFunction.echo("ERROR: Could not read file .docker-tasks.yml. Please run `yarn docker genconfig` if you have not done so already.");
-    throw e;
   }
 
   /**
