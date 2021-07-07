@@ -9,8 +9,6 @@ Test that calling 'release 0.0.1 --public' will override a 'defaultRelease: priv
     imageName: foo
     defaultRelease: private
     username: folkforms
-    privateRepoFolder: private-repo-folder
-    privateRepoUrl: private-repo-url.com
 
 ## Input args
 
