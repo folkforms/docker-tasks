@@ -9,7 +9,8 @@
   "scripts": {
     "docker-tasks": "node cli.js",
     "release": "yarn test && npm whoami && yarn install --production --force && npm version patch && npm publish && yarn install",
-    "test": "jest"
+    "generate-tests": "markdown-to-x -i=tests/test-cases/*.md -s=tests/structure.md -t=tests/template.js -o=tests/gen -e=.test.js",
+    "test": "yarn generate-tests && jest"
   },
   "author": "folkforms",
   "repository": {
@@ -23,6 +24,7 @@
     "shelljs": "^0.8.4"
   },
   "devDependencies": {
-    "jest": "^27.0.4"
+    "jest": "^27.0.4",
+    "markdown-to-x": "^0.0.9"
   }
 }

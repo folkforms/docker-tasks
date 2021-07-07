@@ -8,7 +8,7 @@ beforeEach(() => {
 test("when we call 'genconfig' it executes the correct command", () => {
   const exitCode = dockerTasks(dummyShellJs, ["genconfig"]);
   expect(exitCode).toEqual(0);
-  expect(dummyShellJs.cpList).toContain("cp ./node_modules/docker-tasks/.docker-tasks-default-config.yml ./.docker-tasks.yml");
+  expect(dummyShellJs.execList).toContain("cp ./node_modules/docker-tasks/.docker-tasks-default-config.yml ./.docker-tasks.yml");
 });
 
 test("when we call 'build' it executes the correct command", () => {
