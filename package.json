@@ -25,6 +25,6 @@
   },
   "devDependencies": {
     "jest": "^27.0.4",
-    "markdown-to-x": "^0.0.9"
+    "markdown-to-x": "^0.0.10"
   }
 }

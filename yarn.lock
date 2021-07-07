@@ -2009,15 +2009,16 @@ makeerror@1.0.x:
   dependencies:
     tmpl "1.0.x"
 
-markdown-to-x@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/markdown-to-x/-/markdown-to-x-0.0.9.tgz#33aecf57a0bc3bf63c00fd2dd280cde2054296b9"
-  integrity sha512-Nv1TxrO5H2Yp9fIbnwkMeyIXNGk6jYPNiuPf1Lv4QgWhMFy6npkJ42I/bVS1TjhaA/IdowKn2JS2jKvUO8Itpg==
+markdown-to-x@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/markdown-to-x/-/markdown-to-x-0.0.10.tgz#da1d4d44cdabad79c3d62283b9d90a9606d45229"
+  integrity sha512-H8SfYIm11r9TWgImU6pE0W2K9m44kstt7criZWS2jq/cMjqOJwnq74hyesKYPpzJChpiHarPZ8sdl3XkIVQ6Xg==
   dependencies:
     "@folkforms/file-io" "^0.2.1"
     glob "^7.1.7"
     js-levenshtein "^1.1.6"
     nunjucks "^3.2.3"
+    shelljs "^0.8.4"
 
 merge-stream@^2.0.0:
   version "2.0.0"
