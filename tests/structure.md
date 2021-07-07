@@ -15,3 +15,7 @@
 ## Expected commands
 
 {expectedCommands}
+
+## Expected echos
+
+{expectedEchos}

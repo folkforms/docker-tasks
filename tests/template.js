@@ -15,12 +15,19 @@ test('{{ description | first | esq }} (file: {{ @filename }})', () => {
   const expectedCommands = [
     {{ expectedCommands | trimarray | doublequote | join(",\n") | indent(4) }}
   ];
+  const expectedEchos = [
+    {{ expectedEchos | trimarray | doublequote | join(",\n") | indent(4) }}
+  ];
 
   const exitCode = dockerTasks(dummyShellJs, props, inputArgs);
 
   expect(exitCode).toEqual(0);
-  expect(dummyShellJs.execList.length).toEqual(expectedCommands.length);
   expectedCommands.forEach(cmd => {
     expect(dummyShellJs.execList).toContain(cmd);
   });
+  expect(dummyShellJs.execList.length).toEqual(expectedCommands.length);
+  expectedEchos.forEach(cmd => {
+    expect(dummyShellJs.echoList).toContain(cmd);
+  });
+  expect(dummyShellJs.echoList.length).toEqual(expectedEchos.length);
 });
