@@ -2,7 +2,7 @@
 
 ## Description
 
-Test when we call 'build -p' it executes the correct command.
+Test when we call 'build -p' it executes the correct commands.
 
 ## Input config
 

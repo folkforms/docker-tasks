@@ -1,8 +1,8 @@
-# Test case for 'release latest'
+# Test that calling 'release latest' with 'defaultRelease: private' will be a private release
 
 ## Description
 
-Test that calling 'release latest' will run the correct commands.
+Test that calling 'release latest' with 'defaultRelease: private' will be a private release.
 
 ## Input config
 

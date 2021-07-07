@@ -1,8 +1,8 @@
-# Test that calling 'release 0.0.1' with 'private' configured will be a private release
+# Test that calling 'release 0.0.1' with 'defaultRelease: private' will be a private release
 
 ## Description
 
-Test that calling 'release 0.0.1' with 'private' configured will be a private release.
+Test that calling 'release 0.0.1' with 'defaultRelease: private' will be a private release.
 
 ## Input config
 

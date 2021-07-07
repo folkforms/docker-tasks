@@ -1,8 +1,8 @@
-# Test case for 'build' command
+# Test case for 'prune' command
 
 ## Description
 
-Test when we call 'build' it executes the correct command.
+Test when we call 'prune' it executes the correct command.
 
 ## Input config
 
