@@ -1,4 +1,12 @@
 imageName: <image name> (mandatory)
 runArgs: <arguments passed to docker run command, e.g. "-p 3000:3000">
+
+# Options are private/public. Use --private or --public to override temporarily. Defaults to public if not specified.
+defaultRelease: public
+
+# Public repo
 username: <username/folder on docker.io or folder on repo>
-#repoUrl: <repo url if private repo, will use docker.io if not specified>
+
+# Private repo
+privateRepoFolder: private-repo-folder
+privateRepoUrl: private-repo.com
