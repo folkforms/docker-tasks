@@ -18,10 +18,11 @@ test('{{ description | first | esq }} (file: {{ @filename }})', () => {
   const expectedEchos = [
     {{ expectedEchos | trimarray | doublequote | join(",\n") | indent(4) }}
   ];
+  const expectedErrorCode = {{ expectedErrorCode | trimarray | usedefault(0) }};
 
   const exitCode = dockerTasks(dummyShellJs, props, inputArgs);
 
-  expect(exitCode).toEqual(0);
+  expect(exitCode).toEqual(expectedErrorCode);
   expectedCommands.forEach(cmd => {
     expect(dummyShellJs.execList).toContain(cmd);
   });

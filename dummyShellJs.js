@@ -4,7 +4,9 @@ const dummyShellJs = {
     dummyShellJs.cpList = [];
     dummyShellJs.execList = [];
   },
-  exit: () => {},
+  exit: code => {
+    return { code };
+  },
   echoList: [],
   echo: arg => {
     dummyShellJs.echoList.push(arg.trim());
