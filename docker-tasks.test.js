@@ -34,3 +34,54 @@ test("when we pass no command we get an error message and a non-zero exit code",
   expect(exitCode).toEqual(1);
   expect(dummyShellJs.echoList).toContain("ERROR: No option chosen.");
 });
+
+test("we validate required properties for 'build' command", () => {
+  let invalidProps = {};
+  const exitCode = dockerTasks(dummyShellJs, invalidProps, ["build"]);
+  expect(exitCode).toEqual(1);
+  expect(dummyShellJs.echoList).toContain("ERROR: Missing configuration properties: imageName");
+});
+
+test("we validate required properties", () => {
+  const required = {
+    "build": [ "imageName" ],
+    "run": [ "imageName" ],
+    "clear": [ "imageName" ],
+    "debug": [ "imageName" ],
+  };
+  let invalidProps = {};
+
+  Object.keys(required).forEach(cmd => {
+    const exitCode = dockerTasks(dummyShellJs, invalidProps, [cmd]);
+    expect(exitCode).toEqual(1);
+    expect(dummyShellJs.echoList).toContain(`ERROR: Missing configuration properties: ${required[cmd].join(", ")}`);
+  });
+});
+
+test("we validate required release <version> (public) properties", () => {
+  let invalidProps = {};
+  const exitCode = dockerTasks(dummyShellJs, invalidProps, ["release", "version"]);
+  expect(exitCode).toEqual(1);
+  expect(dummyShellJs.echoList).toContain("ERROR: Missing configuration properties: imageName, username");
+});
+
+test("we validate required release latest (public) properties", () => {
+  let invalidProps = {};
+  const exitCode = dockerTasks(dummyShellJs, invalidProps, ["release", "latest"]);
+  expect(exitCode).toEqual(1);
+  expect(dummyShellJs.echoList).toContain("ERROR: Missing configuration properties: imageName, username");
+});
+
+test("we validate required release <version> (private) properties", () => {
+  let invalidProps = {};
+  const exitCode = dockerTasks(dummyShellJs, invalidProps, ["release", "version", "--private"]);
+  expect(exitCode).toEqual(1);
+  expect(dummyShellJs.echoList).toContain("ERROR: Missing configuration properties: imageName, privateRepoUrl, privateRepoFolder");
+});
+
+test("we validate required release latest (private) properties", () => {
+  let invalidProps = {};
+  const exitCode = dockerTasks(dummyShellJs, invalidProps, ["release", "latest", "--private"]);
+  expect(exitCode).toEqual(1);
+  expect(dummyShellJs.echoList).toContain("ERROR: Missing configuration properties: imageName, privateRepoUrl, privateRepoFolder");
+});

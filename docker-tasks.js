@@ -86,7 +86,25 @@ const dockerTasks = (execFunction = shelljs, props, args) => {
   }
 
   /**
-   * Executes the given command. If there is an error it will call `execFunction.exit(1)`.
+   * Validates that the given configuration properties exist.
+   *
+   * @param  {...string} propNames properties to validate
+   */
+  const validate = (...propNames) => {
+    let missingProps = [];
+    propNames.forEach(propName => {
+      if(!props[propName]) {
+        missingProps.push(propName);
+      }
+    });
+    if(missingProps.length > 0) {
+      execFunction.echo(`ERROR: Missing configuration properties: ${missingProps.join(", ")}`);
+      return 1;
+    }
+  }
+
+  /**
+   * Executes the given command.
    *
    * @param {string} cmd command to execute
    */
@@ -103,6 +121,10 @@ const dockerTasks = (execFunction = shelljs, props, args) => {
   // Handle commands
 
   if(option === "build") {
+    const r0 = validate("imageName");
+    if(r0) {
+      return r0;
+    }
     let r1;
     if(prune) {
       r1 = exec(`docker system prune --force`);
@@ -118,6 +140,10 @@ const dockerTasks = (execFunction = shelljs, props, args) => {
   }
 
   if(option === "run") {
+    const r0 = validate("imageName");
+    if(r0) {
+      return r0;
+    }
     exec(`docker stop ${props.imageName}`);
     exec(`docker rm ${props.imageName}`);
     const runArgs = props.runArgs || "";
@@ -125,6 +151,10 @@ const dockerTasks = (execFunction = shelljs, props, args) => {
   }
 
   if(option === "clear") {
+    const r0 = validate("imageName");
+    if(r0) {
+      return r0;
+    }
     const r1 = exec(`docker stop ${props.imageName}`);
     if(r1) {
       return r1;
@@ -133,6 +163,10 @@ const dockerTasks = (execFunction = shelljs, props, args) => {
   }
 
   if(option === "debug") {
+    const r0 = validate("imageName");
+    if(r0) {
+      return r0;
+    }
     // FIXME Is there any way to make this work?
     execFunction.echo("We can't debug directly because we are inside a script. You need to run one of these commands:");
     execFunction.echo("");
@@ -161,6 +195,10 @@ const dockerTasks = (execFunction = shelljs, props, args) => {
 
     let cmds;
     if(isPublicRelease) {
+      const r0 = validate("imageName", "username");
+      if(r0) {
+        return r0;
+      }
       if(version === "latest") {
         cmds = [
           `docker image tag ${additionalArgs} ${props.imageName}:latest docker.io/${props.username}/${props.imageName}:latest`,
@@ -176,6 +214,10 @@ const dockerTasks = (execFunction = shelljs, props, args) => {
         ];
       }
     } else {
+      const r0 = validate("imageName", "privateRepoUrl", "privateRepoFolder");
+      if(r0) {
+        return r0;
+      }
       if(version === "latest") {
         cmds = [
           `docker image tag ${additionalArgs} ${props.imageName}:latest ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:latest`,
