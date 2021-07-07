@@ -7,7 +7,6 @@ Test that calling 'release 0.0.1' is a public release by default.
 ## Input config
 
     imageName: foo
-    runArgs: -p 3000:3000
     # defaultRelease: public # This line deliberately removed
     username: folkforms
     privateRepoFolder: private-repo-folder

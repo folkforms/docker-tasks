@@ -7,11 +7,9 @@ Test that calling 'release 0.0.1' with 'private' configured will be a private re
 ## Input config
 
     imageName: foo
-    runArgs: -p 3000:3000
     defaultRelease: private
-    username: folkforms
-    privateRepoFolder: private-repo-folder
     privateRepoUrl: private-repo-url.com
+    privateRepoFolder: private-repo-folder
 
 ## Input args
 

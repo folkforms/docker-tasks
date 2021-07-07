@@ -7,7 +7,6 @@ Test that calling 'release 0.0.1 --public' will override a 'defaultRelease: priv
 ## Input config
 
     imageName: foo
-    runArgs: -p 3000:3000
     defaultRelease: private
     username: folkforms
     privateRepoFolder: private-repo-folder

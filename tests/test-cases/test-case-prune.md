@@ -6,12 +6,10 @@ Test when we call 'build' it executes the correct command.
 
 ## Input config
 
-    imageName: bar
-
 ## Input args
 
-    build
+    prune
 
 ## Expected commands
 
-    docker build --tag bar:latest .
+    docker system prune --force
