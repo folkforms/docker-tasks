@@ -43,9 +43,23 @@ const dockerTasks = (execFunction = shelljs, props, args) => {
   }
 
   let prune = false;
+  let publicRelease = false;
+  let privateRelease = false;
   for(let i = 0; i < args.length; i++) {
     if(args[i] === "-p" || args[i] === "--prune") {
       prune = true;
+      args.splice(i, 1);
+      i--;
+      continue;
+    }
+    if(args[i] === "--public") {
+      publicRelease = true;
+      args.splice(i, 1);
+      i--;
+      continue;
+    }
+    if(args[i] === "--private") {
+      privateRelease = true;
       args.splice(i, 1);
       i--;
       continue;
@@ -136,23 +150,48 @@ const dockerTasks = (execFunction = shelljs, props, args) => {
       return 1;
     }
 
-    const repoUrl = props.repoUrl || "docker.io";
+    // Release type defaults to public if not specified in config. Default can be overridden with "--public" or "--private".
+    let isPublicRelease = props.defaultRelease !== "private";
+    if(publicRelease) {
+      isPublicRelease = true;
+    }
+    if(privateRelease) {
+      isPublicRelease = false;
+    }
 
     let cmds;
-    if(version === "latest") {
-      cmds = [
-        `docker image tag ${additionalArgs} ${props.imageName}:latest ${repoUrl}/${props.username}/${props.imageName}:latest`,
-        `docker image push ${additionalArgs} ${repoUrl}/${props.username}/${props.imageName}:latest`,
-      ];
+    if(isPublicRelease) {
+      if(version === "latest") {
+        cmds = [
+          `docker image tag ${additionalArgs} ${props.imageName}:latest docker.io/${props.username}/${props.imageName}:latest`,
+          `docker image push ${additionalArgs} docker.io/${props.username}/${props.imageName}:latest`,
+        ];
+      } else {
+        cmds = [
+          `docker image tag ${additionalArgs} ${props.imageName}:latest ${props.imageName}:${version}`,
+          `docker image tag ${additionalArgs} ${props.imageName}:latest docker.io/${props.username}/${props.imageName}:${version}`,
+          `docker image tag ${additionalArgs} ${props.imageName}:latest docker.io/${props.username}/${props.imageName}:latest`,
+          `docker image push ${additionalArgs} docker.io/${props.username}/${props.imageName}:${version}`,
+          `docker image push ${additionalArgs} docker.io/${props.username}/${props.imageName}:latest`
+        ];
+      }
     } else {
-      cmds = [
-        `docker image tag ${additionalArgs} ${props.imageName}:latest ${props.imageName}:${version}`,
-        `docker image tag ${additionalArgs} ${props.imageName}:latest ${repoUrl}/${props.username}/${props.imageName}:${version}`,
-        `docker image tag ${additionalArgs} ${props.imageName}:latest ${repoUrl}/${props.username}/${props.imageName}:latest`,
-        `docker image push ${additionalArgs} ${repoUrl}/${props.username}/${props.imageName}:latest`,
-        `docker image push ${additionalArgs} ${repoUrl}/${props.username}/${props.imageName}:${version}`
-      ];
+      if(version === "latest") {
+        cmds = [
+          `docker image tag ${additionalArgs} ${props.imageName}:latest ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:latest`,
+          `docker image push ${additionalArgs} ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:latest`,
+        ];
+      } else {
+        cmds = [
+          `docker image tag ${additionalArgs} ${props.imageName}:latest ${props.imageName}:${version}`,
+          `docker image tag ${additionalArgs} ${props.imageName}:latest ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:${version}`,
+          `docker image tag ${additionalArgs} ${props.imageName}:latest ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:latest`,
+          `docker image push ${additionalArgs} ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:${version}`,
+          `docker image push ${additionalArgs} ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:latest`
+        ];
+      }
     }
+
     for(let i = 0; i < cmds.length; i++) {
       exec(cmds[i]);
     }

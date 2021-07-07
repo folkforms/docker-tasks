@@ -8,5 +8,5 @@ defaultRelease: public
 username: <username/folder on docker.io or folder on repo>
 
 # Private repo
-privateRepoFolder: private-repo-folder
 privateRepoUrl: private-repo.com
+privateRepoFolder: private-repo-folder
