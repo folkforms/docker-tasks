@@ -1,0 +1,14 @@
+# This file is configuration for ../docker-tasks.test.js
+
+imageName: foo
+runArgs: -p 3000:3000
+
+# Options are private/public. Use --private or --public to override temporarily. Defaults to public if not specified.
+defaultRelease: public
+
+# Public repo
+username: folkforms
+
+# Private repo
+privateRepoFolder: private-repo-folder
+privateRepoUrl: private-repo.com

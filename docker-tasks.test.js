@@ -5,10 +5,10 @@ const dockerTasks = require("./docker-tasks");
 
 let props;
 try {
-  const file = fs.readFileSync(".docker-tasks.yml", "utf8");
+  const file = fs.readFileSync("./tests/.docker-tasks.yml", "utf8");
   props = yaml.load(file);
 } catch (e) {
-  console.error("ERROR: Could not read file .docker-tasks.yml.");
+  console.error("ERROR: Could not read file ./tests/.docker-tasks.yml.");
   throw e;
 }
 
