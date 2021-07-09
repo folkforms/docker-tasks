@@ -29,6 +29,7 @@ Run `yarn docker-tasks <option>`
 ### Examples
 
 With this configuration:
+
 ```
 imageName: foo
 runArgs: -p 3000:3000
@@ -36,17 +37,21 @@ username: folkforms
 ```
 
 - Running `yarn docker-tasks build`
-    - => `docker build --tag foo:latest .`
+  - => `docker build --tag foo:latest .`
 - Running `yarn docker-tasks run`
-    - => `docker stop foo`
-    - => `docker rm foo`
-    - => `docker run -p 3000:3000 --name foo foo:latest`
+  - => `docker stop foo`
+  - => `docker rm foo`
+  - => `docker run -p 3000:3000 --name foo foo:latest`
+- Running `yarn docker-tasks release 0.0.1`
+  - => `docker image tag foo:latest foo:0.0.1`
+  - => `docker image tag foo:latest docker.io/folkforms/foo:0.0.1`
+  - => `docker image push docker.io/folkforms/foo:0.0.1`
 - Running `yarn docker-tasks release latest`
-    - => `docker image tag foo:latest docker.io/folkforms/foo:latest`
-    - => `docker image push docker.io/folkforms/foo:latest`
+  - => `docker image tag foo:latest docker.io/folkforms/foo:latest`
+  - => `docker image push docker.io/folkforms/foo:latest`
 - Running `yarn docker-tasks clear`
-    - => `docker stop foo`
-    - => `docker rm foo`
+  - => `docker stop foo`
+  - => `docker rm foo`
 - Running `yarn docker-tasks prune`
-    - => `docker system prune --force`
+  - => `docker system prune --force`
 - etc.

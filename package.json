@@ -7,6 +7,7 @@
     "docker-tasks": "./cli.js"
   },
   "scripts": {
+    "test-lec1": "lec -v -c LF -n -r -d .",
     "docker-tasks": "node cli.js",
     "release": "npm-release",
     "generate-tests": "markdown-to-x -i=tests/test-cases/*.md -s=tests/structure.md -t=tests/template.js -o=tests/gen -e=.test.js",
@@ -22,6 +23,7 @@
     "dummy-shells": "^0.0.4",
     "fs-extra": "^9.1.0",
     "js-yaml": "^4.0.0",
+    "prettier": "^2.3.2",
     "shelljs": "^0.8.4"
   },
   "devDependencies": {
