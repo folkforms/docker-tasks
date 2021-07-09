@@ -30,6 +30,8 @@ try {
   throw e;
 }
 
-dockerTasks(shell, props, process.argv);
+const r = dockerTasks(shell, props, process.argv);
 
 if(dryRun) { console.log(""); }
+
+return r;
