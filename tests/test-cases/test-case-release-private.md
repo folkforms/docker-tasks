@@ -19,6 +19,4 @@ Test that calling 'release 0.0.1 --private' will override a 'defaultRelease: pub
 
     docker image tag foo:latest foo:0.0.1
     docker image tag foo:latest private-repo-url.com/private-repo-folder/foo:0.0.1
-    docker image tag foo:latest private-repo-url.com/private-repo-folder/foo:latest
     docker image push private-repo-url.com/private-repo-folder/foo:0.0.1
-    docker image push private-repo-url.com/private-repo-folder/foo:latest

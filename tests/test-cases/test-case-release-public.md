@@ -18,6 +18,4 @@ Test that calling 'release 0.0.1 --public' will override a 'defaultRelease: priv
 
     docker image tag foo:latest foo:0.0.1
     docker image tag foo:latest docker.io/folkforms/foo:0.0.1
-    docker image tag foo:latest docker.io/folkforms/foo:latest
     docker image push docker.io/folkforms/foo:0.0.1
-    docker image push docker.io/folkforms/foo:latest

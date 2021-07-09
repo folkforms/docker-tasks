@@ -193,45 +193,27 @@ const dockerTasks = (execFunction = shelljs, props, args) => {
       isPublicRelease = false;
     }
 
-    let cmds;
+    let cmds = [];
     if(isPublicRelease) {
       const r0 = validate("imageName", "username");
       if(r0) {
         return r0;
       }
-      if(version === "latest") {
-        cmds = [
-          `docker image tag ${additionalArgs} ${props.imageName}:latest docker.io/${props.username}/${props.imageName}:latest`,
-          `docker image push ${additionalArgs} docker.io/${props.username}/${props.imageName}:latest`,
-        ];
-      } else {
-        cmds = [
-          `docker image tag ${additionalArgs} ${props.imageName}:latest ${props.imageName}:${version}`,
-          `docker image tag ${additionalArgs} ${props.imageName}:latest docker.io/${props.username}/${props.imageName}:${version}`,
-          `docker image tag ${additionalArgs} ${props.imageName}:latest docker.io/${props.username}/${props.imageName}:latest`,
-          `docker image push ${additionalArgs} docker.io/${props.username}/${props.imageName}:${version}`,
-          `docker image push ${additionalArgs} docker.io/${props.username}/${props.imageName}:latest`
-        ];
+      if(version !== "latest") {
+        cmds.push(`docker image tag ${additionalArgs} ${props.imageName}:latest ${props.imageName}:${version}`);
       }
+      cmds.push(`docker image tag ${additionalArgs} ${props.imageName}:latest docker.io/${props.username}/${props.imageName}:${version}`);
+      cmds.push(`docker image push ${additionalArgs} docker.io/${props.username}/${props.imageName}:${version}`);
     } else {
       const r0 = validate("imageName", "privateRepoUrl", "privateRepoFolder");
       if(r0) {
         return r0;
       }
-      if(version === "latest") {
-        cmds = [
-          `docker image tag ${additionalArgs} ${props.imageName}:latest ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:latest`,
-          `docker image push ${additionalArgs} ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:latest`,
-        ];
-      } else {
-        cmds = [
-          `docker image tag ${additionalArgs} ${props.imageName}:latest ${props.imageName}:${version}`,
-          `docker image tag ${additionalArgs} ${props.imageName}:latest ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:${version}`,
-          `docker image tag ${additionalArgs} ${props.imageName}:latest ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:latest`,
-          `docker image push ${additionalArgs} ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:${version}`,
-          `docker image push ${additionalArgs} ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:latest`
-        ];
+      if(version !== "latest") {
+        cmds.push(`docker image tag ${additionalArgs} ${props.imageName}:latest ${props.imageName}:${version}`);
       }
+      cmds.push(`docker image tag ${additionalArgs} ${props.imageName}:latest ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:${version}`);
+      cmds.push(`docker image push ${additionalArgs} ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:${version}`);
     }
 
     for(let i = 0; i < cmds.length; i++) {
