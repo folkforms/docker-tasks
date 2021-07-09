@@ -2,7 +2,7 @@
 
 const fs = require("fs-extra");
 const yaml = require("js-yaml");
-const dryRunShellJs = require("./dryRunShellJs");
+const { dryRunShellJs } = require("dummy-shells");
 const dockerTasks = require("./docker-tasks");
 
 process.argv.splice(0,2); // Remove node and script name

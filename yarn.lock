@@ -1065,6 +1065,11 @@ dummy-shells@^0.0.3:
   resolved "https://registry.yarnpkg.com/dummy-shells/-/dummy-shells-0.0.3.tgz#8a46da483c7103a6a4b2c2df91264306c9a43549"
   integrity sha512-EEH5G9EnP5JaM9G+0ERXRSU176uMMagTnDhugamLc2Xd1z89sXASzbwkvZvgAy2tT9fUIIc5NwCv+8IrvTmDUw==
 
+dummy-shells@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/dummy-shells/-/dummy-shells-0.0.4.tgz#0167f1021132421cec14dbf074f727a8fa7fa663"
+  integrity sha512-UoG3XCnaH0JQdJSN8NKWmqZKyjCiLYas+UP7qN/nDgn/fv7VLJ+9TMKLevvscCHU/MhFeU/CGIlNS3hC0Eu8Ew==
+
 electron-to-chromium@^1.3.723:
   version "1.3.752"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.752.tgz#0728587f1b9b970ec9ffad932496429aef750d09"

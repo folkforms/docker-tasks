@@ -1,5 +1,5 @@
 const yaml = require("js-yaml");
-const dummyShellJs = require("../../dummyShellJs");
+const { dummyShellJs } = require("dummy-shells");
 const dockerTasks = require("../../docker-tasks");
 
 beforeEach(() => {

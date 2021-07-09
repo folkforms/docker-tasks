@@ -1,7 +1,6 @@
 const fs = require("fs-extra");
 const yaml = require("js-yaml");
-const dummyShellJs = require("./dummyShellJs");
-const failingShellJs = require("./failingShellJs");
+const { dummyShellJs, failingShellJs } = require("dummy-shells");
 const dockerTasks = require("./docker-tasks");
 
 let props;
