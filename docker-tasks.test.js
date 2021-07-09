@@ -1,6 +1,7 @@
 const fs = require("fs-extra");
 const yaml = require("js-yaml");
 const dummyShellJs = require("./dummyShellJs");
+const failingShellJs = require("./failingShellJs");
 const dockerTasks = require("./docker-tasks");
 
 let props;
@@ -84,4 +85,9 @@ test("we validate required release latest (private) properties", () => {
   const exitCode = dockerTasks(dummyShellJs, invalidProps, ["release", "latest", "--private"]);
   expect(exitCode).toEqual(1);
   expect(dummyShellJs.echoList).toContain("ERROR: Missing configuration properties: imageName, privateRepoUrl, privateRepoFolder");
+});
+
+test("when 'build' fails the docker-tasks returns 1", () => {
+  const exitCode = dockerTasks(failingShellJs, props, ["build"]);
+  expect(exitCode).toEqual(1);
 });
