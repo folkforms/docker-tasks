@@ -29,6 +29,6 @@
   "devDependencies": {
     "@folkforms/npm-release": "^0.0.16",
     "jest": "^27.0.4",
-    "markdown-to-x": "^0.0.11"
+    "markdown-to-x": "^0.0.12"
   }
 }

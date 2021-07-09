@@ -2034,10 +2034,10 @@ makeerror@1.0.x:
   dependencies:
     tmpl "1.0.x"
 
-markdown-to-x@^0.0.11:
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/markdown-to-x/-/markdown-to-x-0.0.11.tgz#9f2b07a1cbea24dcdd94681d28d3cf6f2c20591a"
-  integrity sha512-8IrQy6ifYKQ9U4NOxqyPYu77hkF+8JVK1O51nAbUAU1LcZuxGUQLt8SU4rkoAcC3GhvqSUcWfZtxQ9Uz1xEE5Q==
+markdown-to-x@^0.0.12:
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/markdown-to-x/-/markdown-to-x-0.0.12.tgz#c8ca7ddb051f860e706658ea80e2f198ef7be330"
+  integrity sha512-g7XMOj0jImngvdFjDDdICkYb95doa+X15a7w1ZHLRDOE+CbRwrFWlxQCBW2Fbn0NmDMY8QAcYlCYd2BPCOqh2Q==
   dependencies:
     "@folkforms/file-io" "^0.2.1"
     glob "^7.1.7"
