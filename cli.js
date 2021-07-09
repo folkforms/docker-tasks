@@ -22,12 +22,14 @@ const shell = dryRun ? dryRunShellJs : undefined;
 if(dryRun) { console.log(""); }
 
 let file, props;
-try {
-  file = fs.readFileSync('.docker-tasks.yml', 'utf8')
-  props = yaml.load(file);
-} catch(e) {
-  execFunction.echo("ERROR: Could not read file .docker-tasks.yml. Please run `yarn docker genconfig` if you have not done so already.");
-  throw e;
+  if(process.argv[0] !== "genconfig") {
+  try {
+    file = fs.readFileSync('.docker-tasks.yml', 'utf8')
+    props = yaml.load(file);
+  } catch(e) {
+    console.log("ERROR: Could not read file .docker-tasks.yml. Please run `yarn docker genconfig` if you have not done so already.");
+    return 1;
+  }
 }
 
 const r = dockerTasks(shell, props, process.argv);

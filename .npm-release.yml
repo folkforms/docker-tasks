@@ -1,0 +1,6 @@
+- yarn test
+- npm whoami
+- yarn install --production --force
+- npm version patch
+- npm publish
+- yarn install

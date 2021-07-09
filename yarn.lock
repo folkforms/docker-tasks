@@ -302,7 +302,7 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@folkforms/file-io@^0.2.1":
+"@folkforms/file-io@^0.2.1", "@folkforms/file-io@^0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@folkforms/file-io/-/file-io-0.2.2.tgz#259cbb2f363aa819ef30ed55252d4140b94e0e20"
   integrity sha512-+yElFzIx+5JeIjrzM5limr/0pPqm2klEqswGdK3JsaQgIr01o5HdPApcmOSYkB0vONSJ6J9EUOy06axcYlOEZg==
@@ -310,6 +310,16 @@
     fast-glob "^3.2.5"
     fs-extra "^9.1.0"
     jest "^27.0.4"
+
+"@folkforms/npm-release@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/@folkforms/npm-release/-/npm-release-0.0.16.tgz#3cbcb4f6907731bb21f91482087b506165603a99"
+  integrity sha512-oF6T9vhPLzcjD7VGzgu1CzKoTWYg35iWB9a1SSRvXdu0HOOQmKBdGuUCBkSDYNs4aMT5xccyVaSjnrOlLdcgaQ==
+  dependencies:
+    "@folkforms/file-io" "^0.2.2"
+    commander "^8.0.0"
+    dummy-shells "^0.0.3"
+    shelljs "^0.8.4"
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
@@ -949,6 +959,11 @@ commander@^5.1.0:
   resolved "https://registry.yarnpkg.com/commander/-/commander-5.1.0.tgz#46abbd1652f8e059bddaef99bbdcb2ad9cf179ae"
   integrity sha512-P0CysNDQ7rtVw4QIQtm+MRxV66vKFSvlsQvGYXZWR3qFU0jlMKHZZZgw8e+8DSah4UDKMqnknRDQz+xuQXQ/Zg==
 
+commander@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-8.0.0.tgz#1da2139548caef59bd23e66d18908dfb54b02258"
+  integrity sha512-Xvf85aAtu6v22+E5hfVoLHqyul/jyxh91zvqk/ioJTQuJR7Z78n7H558vMPKanPSRgIEeZemT92I2g9Y8LPbSQ==
+
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
@@ -1044,6 +1059,11 @@ domexception@^2.0.1:
   integrity sha512-yxJ2mFy/sibVQlu5qHjOkf9J3K6zgmCxgJ94u2EdvDOV09H+32LtRswEcUsmUWN72pVLOEnTSRaIVVzVQgS0dg==
   dependencies:
     webidl-conversions "^5.0.0"
+
+dummy-shells@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/dummy-shells/-/dummy-shells-0.0.3.tgz#8a46da483c7103a6a4b2c2df91264306c9a43549"
+  integrity sha512-EEH5G9EnP5JaM9G+0ERXRSU176uMMagTnDhugamLc2Xd1z89sXASzbwkvZvgAy2tT9fUIIc5NwCv+8IrvTmDUw==
 
 electron-to-chromium@^1.3.723:
   version "1.3.752"
