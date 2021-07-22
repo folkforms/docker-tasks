@@ -19,12 +19,8 @@ beforeEach(() => {
 test("when we call 'debug' it executes the correct command", () => {
   const exitCode = dockerTasks(dummyShellJs, props, ["debug"]);
   expect(exitCode).toEqual(0);
-  expect(dummyShellJs.echoList).toContain(
-    "docker exec --tty --interactive foo bash"
-  );
-  expect(dummyShellJs.echoList).toContain(
-    "docker run  --tty --interactive --entrypoint bash foo:latest"
-  );
+  expect(dummyShellJs.echoList).toContain("docker exec --tty --interactive foo bash");
+  expect(dummyShellJs.echoList).toContain("docker run  --tty --interactive --entrypoint bash foo:latest");
 });
 
 test("when we pass an unknown command we get an error message and a non-zero exit code", () => {
@@ -43,9 +39,7 @@ test("we validate required properties for 'build' command", () => {
   let invalidProps = {};
   const exitCode = dockerTasks(dummyShellJs, invalidProps, ["build"]);
   expect(exitCode).toEqual(1);
-  expect(dummyShellJs.echoList).toContain(
-    "ERROR: Missing configuration properties: imageName"
-  );
+  expect(dummyShellJs.echoList).toContain("ERROR: Missing configuration properties: imageName");
 });
 
 test("we validate required properties", () => {
@@ -60,9 +54,7 @@ test("we validate required properties", () => {
   Object.keys(required).forEach((cmd) => {
     const exitCode = dockerTasks(dummyShellJs, invalidProps, [cmd]);
     expect(exitCode).toEqual(1);
-    expect(dummyShellJs.echoList).toContain(
-      `ERROR: Missing configuration properties: ${required[cmd].join(", ")}`
-    );
+    expect(dummyShellJs.echoList).toContain(`ERROR: Missing configuration properties: ${required[cmd].join(", ")}`);
   });
 });
 
@@ -73,9 +65,7 @@ test("we validate required release <version> (public) properties", () => {
     "version",
   ]);
   expect(exitCode).toEqual(1);
-  expect(dummyShellJs.echoList).toContain(
-    "ERROR: Missing configuration properties: imageName, username"
-  );
+  expect(dummyShellJs.echoList).toContain("ERROR: Missing configuration properties: imageName, username");
 });
 
 test("we validate required release latest (public) properties", () => {
@@ -85,9 +75,7 @@ test("we validate required release latest (public) properties", () => {
     "latest",
   ]);
   expect(exitCode).toEqual(1);
-  expect(dummyShellJs.echoList).toContain(
-    "ERROR: Missing configuration properties: imageName, username"
-  );
+  expect(dummyShellJs.echoList).toContain("ERROR: Missing configuration properties: imageName, username");
 });
 
 test("we validate required release <version> (private) properties", () => {
@@ -98,9 +86,7 @@ test("we validate required release <version> (private) properties", () => {
     "--private",
   ]);
   expect(exitCode).toEqual(1);
-  expect(dummyShellJs.echoList).toContain(
-    "ERROR: Missing configuration properties: imageName, privateRepoUrl, privateRepoFolder"
-  );
+  expect(dummyShellJs.echoList).toContain("ERROR: Missing configuration properties: imageName, privateRepoUrl, privateRepoFolder");
 });
 
 test("we validate required release latest (private) properties", () => {
@@ -111,9 +97,7 @@ test("we validate required release latest (private) properties", () => {
     "--private",
   ]);
   expect(exitCode).toEqual(1);
-  expect(dummyShellJs.echoList).toContain(
-    "ERROR: Missing configuration properties: imageName, privateRepoUrl, privateRepoFolder"
-  );
+  expect(dummyShellJs.echoList).toContain("ERROR: Missing configuration properties: imageName, privateRepoUrl, privateRepoFolder");
 });
 
 test("when 'build' fails the docker-tasks returns 1", () => {

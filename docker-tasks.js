@@ -6,38 +6,18 @@ const dockerTasks = (execFunction = shelljs, props, args) => {
     execFunction.echo("");
     execFunction.echo("Usage:");
     execFunction.echo("");
-    execFunction.echo(
-      "  yarn docker-tasks help                 Prints this help text."
-    );
-    execFunction.echo(
-      "  yarn docker-tasks genconfig            Generates a configuration file for you to edit with your project details."
-    );
-    execFunction.echo(
-      "  yarn docker-tasks build [-p]           Builds the image. Use -p to prune before building."
-    );
-    execFunction.echo(
-      "  yarn docker-tasks run                  Runs the container."
-    );
-    execFunction.echo(
-      "  yarn docker-tasks debug                Runs the container as above but overrides the entry point with `bash` so you can take a look inside. (Note: Because of how shelljs works the debug command cannot be run directly. Instead, this will print out a command for you to run yourself.)"
-    );
-    execFunction.echo(
-      "  yarn docker-tasks clear                Stops and removes the container."
-    );
-    execFunction.echo(
-      "  yarn docker-tasks prune                Removes unused data."
-    );
-    execFunction.echo(
-      "  yarn docker-tasks release <version>    Tags '<imageName>:latest' as '<imageName>:<version>', then runs \"docker push <imageName>:latest\" followed by \"docker push <imageName>:<version>\"."
-    );
+    execFunction.echo("  yarn docker-tasks help                 Prints this help text.");
+    execFunction.echo("  yarn docker-tasks genconfig            Generates a configuration file for you to edit with your project details.");
+    execFunction.echo("  yarn docker-tasks build [-p]           Builds the image. Use -p to prune before building.");
+    execFunction.echo("  yarn docker-tasks run                  Runs the container.");
+    execFunction.echo("  yarn docker-tasks debug                Runs the container as above but overrides the entry point with `bash` so you can take a look inside. (Note: Because of how shelljs works the debug command cannot be run directly. Instead, this will print out a command for you to run yourself.)");
+    execFunction.echo("  yarn docker-tasks clear                Stops and removes the container.");
+    execFunction.echo("  yarn docker-tasks prune                Removes unused data.");
+    execFunction.echo("  yarn docker-tasks release <version>    Tags '<imageName>:latest' as '<imageName>:<version>', then runs \"docker push <imageName>:latest\" followed by \"docker push <imageName>:<version>\".");
     execFunction.echo("");
-    execFunction.echo(
-      "Use -n/--dry-run to see what commands would be run, without actually running anything."
-    );
+    execFunction.echo("Use -n/--dry-run to see what commands would be run, without actually running anything.");
     execFunction.echo("");
-    execFunction.echo(
-      "See https://github.com/folkforms/docker-tasks for readme."
-    );
+    execFunction.echo("See https://github.com/folkforms/docker-tasks for readme.");
     execFunction.echo("");
   };
 
@@ -100,9 +80,7 @@ const dockerTasks = (execFunction = shelljs, props, args) => {
       execFunction.echo(`ERROR: Could not copy file '${cmd1}' to '${cmd2}'.`);
       return 1;
     }
-    execFunction.echo(
-      "Created file .docker-tasks.yml. You need to edit this file with your project details."
-    );
+    execFunction.echo("Created file .docker-tasks.yml. You need to edit this file with your project details.");
     return 0;
   }
 
@@ -119,9 +97,7 @@ const dockerTasks = (execFunction = shelljs, props, args) => {
       }
     });
     if (missingProps.length > 0) {
-      execFunction.echo(
-        `ERROR: Missing configuration properties: ${missingProps.join(", ")}`
-      );
+      execFunction.echo(`ERROR: Missing configuration properties: ${missingProps.join(", ")}`);
       return 1;
     }
   };
@@ -155,9 +131,7 @@ const dockerTasks = (execFunction = shelljs, props, args) => {
     if (r1) {
       return r1;
     }
-    return exec(
-      `docker build ${additionalArgs} --tag ${props.imageName}:latest .`
-    );
+    return exec(`docker build ${additionalArgs} --tag ${props.imageName}:latest .`);
   }
 
   if (option === "prune") {
@@ -172,9 +146,7 @@ const dockerTasks = (execFunction = shelljs, props, args) => {
     exec(`docker stop ${props.imageName}`);
     exec(`docker rm ${props.imageName}`);
     const runArgs = props.runArgs || "";
-    return exec(
-      `docker run ${additionalArgs} ${runArgs} --name ${props.imageName} ${props.imageName}:latest`
-    );
+    return exec(`docker run ${additionalArgs} ${runArgs} --name ${props.imageName} ${props.imageName}:latest`);
   }
 
   if (option === "clear") {
@@ -195,29 +167,19 @@ const dockerTasks = (execFunction = shelljs, props, args) => {
       return r0;
     }
     // FIXME Is there any way to make this work?
-    execFunction.echo(
-      "We can't debug directly because we are inside a script. You need to run one of these commands:"
-    );
+    execFunction.echo("We can't debug directly because we are inside a script. You need to run one of these commands:");
     execFunction.echo("");
-    execFunction.echo(
-      `    docker exec --tty --interactive ${props.imageName} bash`
-    );
-    execFunction.echo(
-      `    docker run ${additionalArgs} --tty --interactive --entrypoint bash ${props.imageName}:latest`
-    );
+    execFunction.echo(`    docker exec --tty --interactive ${props.imageName} bash`);
+    execFunction.echo(`    docker run ${additionalArgs} --tty --interactive --entrypoint bash ${props.imageName}:latest`);
     execFunction.echo("");
-    execFunction.echo(
-      "The first command will run bash in a running container, the second will start a new container."
-    );
+    execFunction.echo("The first command will run bash in a running container, the second will start a new container.");
     execFunction.echo("");
     return 0;
   }
 
   if (option === "release") {
     if (!version) {
-      execFunction.echo(
-        "ERROR: Must include a version when using 'release' option, e.g. \"yarn docker release 1.0.0\"."
-      );
+      execFunction.echo("ERROR: Must include a version when using 'release' option, e.g. \"yarn docker release 1.0.0\".");
       return 1;
     }
 
@@ -237,32 +199,20 @@ const dockerTasks = (execFunction = shelljs, props, args) => {
         return r0;
       }
       if (version !== "latest") {
-        cmds.push(
-          `docker image tag ${additionalArgs} ${props.imageName}:latest ${props.imageName}:${version}`
-        );
+        cmds.push(`docker image tag ${additionalArgs} ${props.imageName}:latest ${props.imageName}:${version}`);
       }
-      cmds.push(
-        `docker image tag ${additionalArgs} ${props.imageName}:latest docker.io/${props.username}/${props.imageName}:${version}`
-      );
-      cmds.push(
-        `docker image push ${additionalArgs} docker.io/${props.username}/${props.imageName}:${version}`
-      );
+      cmds.push(`docker image tag ${additionalArgs} ${props.imageName}:latest docker.io/${props.username}/${props.imageName}:${version}`);
+      cmds.push(`docker image push ${additionalArgs} docker.io/${props.username}/${props.imageName}:${version}`);
     } else {
       const r0 = validate("imageName", "privateRepoUrl", "privateRepoFolder");
       if (r0) {
         return r0;
       }
       if (version !== "latest") {
-        cmds.push(
-          `docker image tag ${additionalArgs} ${props.imageName}:latest ${props.imageName}:${version}`
-        );
+        cmds.push(`docker image tag ${additionalArgs} ${props.imageName}:latest ${props.imageName}:${version}`);
       }
-      cmds.push(
-        `docker image tag ${additionalArgs} ${props.imageName}:latest ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:${version}`
-      );
-      cmds.push(
-        `docker image push ${additionalArgs} ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:${version}`
-      );
+      cmds.push(`docker image tag ${additionalArgs} ${props.imageName}:latest ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:${version}`);
+      cmds.push(`docker image push ${additionalArgs} ${props.privateRepoUrl}/${props.privateRepoFolder}/${props.imageName}:${version}`);
     }
 
     for (let i = 0; i < cmds.length; i++) {

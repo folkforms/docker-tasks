@@ -29,9 +29,7 @@ if (process.argv[0] !== "genconfig") {
     file = fs.readFileSync(".docker-tasks.yml", "utf8");
     props = yaml.load(file);
   } catch (e) {
-    console.log(
-      "ERROR: Could not read file .docker-tasks.yml. Please run `yarn docker genconfig` if you have not done so already."
-    );
+    console.log("ERROR: Could not read file .docker-tasks.yml. Please run `yarn docker genconfig` if you have not done so already.");
     return 1;
   }
 }

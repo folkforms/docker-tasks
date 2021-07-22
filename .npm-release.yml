@@ -1,5 +1,5 @@
 - yarn test
-- yarn prettier --check .
+- yarn line-endings --check ** --line-ending LF
 - npm whoami
 - yarn install --production --force
 - npm version patch

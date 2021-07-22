@@ -311,10 +311,39 @@
     fs-extra "^9.1.0"
     jest "^27.0.4"
 
+"@folkforms/file-io@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@folkforms/file-io/-/file-io-0.2.3.tgz#6f10c96d6c7aaa1e27e4566bd37693532b31dfa7"
+  integrity sha512-4GCoabgInYEi4nD8fBbJV6n1vtQfdDrb8qpN1J9nhpE5OlcDUpEOssaxlYoX0+WznsCb5ZmbU4D2LpUA/MPKEw==
+  dependencies:
+    fast-glob "^3.2.5"
+    fs-extra "^9.1.0"
+
+"@folkforms/line-endings@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@folkforms/line-endings/-/line-endings-0.0.8.tgz#98c756bf2af80eee406d9dee51d18b9fc1ddee4e"
+  integrity sha512-5czcKJPFX5hT8jcwZ/EycbLT+a+z46Rz3otUXPEhE23yY7JpQWWnckOwERjlEnMYvAVlQPjIgnb9Nl8bsbf+rw==
+  dependencies:
+    "@folkforms/file-io" "^0.2.3"
+    "@folkforms/npm-release" "^0.0.18"
+    commander "^8.0.0"
+    fs-extra "^10.0.0"
+    ignore "^5.1.8"
+
 "@folkforms/npm-release@^0.0.16":
   version "0.0.16"
   resolved "https://registry.yarnpkg.com/@folkforms/npm-release/-/npm-release-0.0.16.tgz#3cbcb4f6907731bb21f91482087b506165603a99"
   integrity sha512-oF6T9vhPLzcjD7VGzgu1CzKoTWYg35iWB9a1SSRvXdu0HOOQmKBdGuUCBkSDYNs4aMT5xccyVaSjnrOlLdcgaQ==
+  dependencies:
+    "@folkforms/file-io" "^0.2.2"
+    commander "^8.0.0"
+    dummy-shells "^0.0.3"
+    shelljs "^0.8.4"
+
+"@folkforms/npm-release@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@folkforms/npm-release/-/npm-release-0.0.18.tgz#85c6ffe8588e064d591837fb4d5e5360a9be3313"
+  integrity sha512-S0omIuva7w3dyjPE1MGMUUMcPxqkQt/lzonPika0j6YSG4cJp4Fboyhrn80TBG1IzEAEvQO+tUa00oT7lzpk7w==
   dependencies:
     "@folkforms/file-io" "^0.2.2"
     commander "^8.0.0"
@@ -1218,6 +1247,15 @@ form-data@^3.0.0:
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
+fs-extra@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-10.0.0.tgz#9ff61b655dde53fb34a82df84bb214ce802e17c1"
+  integrity sha512-C5owb14u9eJwizKGdchcDUQeFtlSHHthBk8pbX9Vc1PFZrLombudjDnNns88aYslCyF6IY5SUw3Roz6xShcEIQ==
+  dependencies:
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
+
 fs-extra@^9.1.0:
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-9.1.0.tgz#5954460c764a8da2094ba3554bf839e6b9a7c86d"
@@ -1361,6 +1399,11 @@ iconv-lite@0.4.24:
   integrity sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
+
+ignore@^5.1.8:
+  version "5.1.8"
+  resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.1.8.tgz#f150a8b50a34289b33e22f5889abd4d8016f0e57"
+  integrity sha512-BMpfD7PpiETpBl/A6S498BaIJ6Y/ABT93ETbby2fP00v4EbvPBXWEoaR1UBPKs3iR53pJY7EtZk5KACI57i1Uw==
 
 import-local@^3.0.2:
   version "3.0.2"
@@ -2241,11 +2284,6 @@ prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
   integrity sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=
-
-prettier@^2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.3.2.tgz#ef280a05ec253712e486233db5c6f23441e7342d"
-  integrity sha512-lnJzDfJ66zkMy58OL5/NY5zp70S7Nz6KqcKkXYzn2tMVrNxvbqaBpg7H3qHaLxCJ5lNMsGuM8+ohS7cZrthdLQ==
 
 pretty-format@^27.0.2:
   version "27.0.2"
