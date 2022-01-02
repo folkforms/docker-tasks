@@ -1,6 +1,6 @@
 {
   "name": "docker-tasks",
-  "version": "0.1.50",
+  "version": "0.1.51",
   "description": "Add common Docker workflow tasks (build/run/debug/release) to a Node project.",
   "main": "docker-tasks.js",
   "bin": {
